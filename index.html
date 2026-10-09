@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AddToMap — Offline Audio Walking Tours</title>
-<meta name="description" content="Self-guided offline audio walking tours in a real human voice. Pick a city, follow the route, hear the stories as you walk. From 0.99 €, no subscription.">
+<meta name="description" content="Self-guided offline audio walking tours. Pick a city, follow the route on the map, and hear its stories as you walk. From 0.99 €, no subscription.">
 <meta property="og:title" content="AddToMap — Offline Audio Walking Tours">
-<meta property="og:description" content="Explore cities at your own pace with real human-voiced audio tours that work fully offline.">
+<meta property="og:description" content="Explore cities at your own pace with self-guided audio tours that work fully offline.">
+<meta property="og:image" content="https://addtomap.co/img/frankfurt.jpg">
 <meta property="og:type" content="website">
 <style>
   :root{ --o:#F2770A; --ink:#15110d; --muted:#6b625a; --bg:#fff; --soft:#faf6f1; }
@@ -15,14 +16,20 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
   header{position:sticky;top:0;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid #0000000d;z-index:10}
-  header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  header .wrap{display:flex;align-items:center;gap:14px;height:64px}
+  .brand{display:flex;align-items:center;gap:9px}
+  .brand img{width:30px;height:30px;object-fit:contain;border-radius:8px}
   .logo{font-weight:800;font-size:22px;letter-spacing:.3px}
   .logo span{color:var(--o)}
-  nav a{color:var(--muted);font-weight:600;margin-left:22px;font-size:15px}
+  nav{margin-left:auto;display:flex;align-items:center;gap:20px}
+  nav a{color:var(--muted);font-weight:600;font-size:15px}
   nav a:hover{color:var(--ink)}
+  .langsel{appearance:none;-webkit-appearance:none;border:1px solid #0000002e;border-radius:999px;padding:7px 30px 7px 14px;font:inherit;font-size:14px;font-weight:600;color:var(--ink);background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M1 1l4 4 4-4' stroke='%236b625a' stroke-width='1.6' fill='none' stroke-linecap='round'/></svg>") no-repeat right 12px center;cursor:pointer}
+  .nav-links{display:flex;gap:20px}
+  @media(max-width:640px){ .nav-links{display:none} }
   .hero{background:linear-gradient(180deg,var(--soft),#fff);padding:72px 0 56px;text-align:center}
-  .hero h1{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-.5px;max-width:16ch;margin:0 auto 16px}
-  .hero p{font-size:clamp(17px,2.5vw,21px);color:var(--muted);max-width:40ch;margin:0 auto 28px}
+  .hero h1{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-.5px;max-width:17ch;margin:0 auto 16px}
+  .hero p{font-size:clamp(17px,2.5vw,21px);color:var(--muted);max-width:42ch;margin:0 auto 28px}
   .badge{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;padding:12px 22px;border-radius:14px;font-weight:700}
   .badge small{display:block;font-size:11px;font-weight:600;opacity:.8;line-height:1}
   .note{color:var(--muted);font-size:13px;margin-top:12px}
@@ -52,56 +59,68 @@
 </head>
 <body>
 <header><div class="wrap">
-  <div class="logo">AddTo<span>Map</span></div>
-  <nav><a href="#tours">Tours</a><a href="#why">Why</a><a href="/privacy.html">Privacy</a><a href="mailto:support@addtomap.co">Support</a></nav>
+  <a class="brand" href="/"><img src="img/pin.png" alt="AddToMap"><span class="logo">AddTo<span>Map</span></span></a>
+  <nav>
+    <span class="nav-links">
+      <a href="#tours" data-i18n="nav_tours">Tours</a>
+      <a href="#why" data-i18n="nav_why">Why</a>
+      <a href="/privacy.html" data-i18n="nav_privacy">Privacy</a>
+      <a href="mailto:support@addtomap.co" data-i18n="nav_support">Support</a>
+    </span>
+    <select class="langsel" id="lang" onchange="setLang(this.value)" aria-label="Language">
+      <option value="en">English</option><option value="de">Deutsch</option>
+      <option value="fr">Français</option><option value="es">Español</option>
+      <option value="it">Italiano</option><option value="ru">Русский</option>
+    </select>
+  </nav>
 </div></header>
 
 <div class="hero"><div class="wrap">
-  <h1>Audio walking tours, in a real human voice</h1>
-  <p>Pick a city, follow the route on the map, and hear its stories as you walk — fully offline. From 0.99 €, no subscription.</p>
-  <a class="badge" href="#tours"><span>🎧</span><span><small>Soon on the</small>App Store</span></a>
-  <div class="note">iPhone · works offline · 6 languages</div>
+  <h1 data-i18n="hero_h1">Walk the city, hear its stories</h1>
+  <p data-i18n="hero_p">Pick a city, follow the route on the map, and hear its stories as you walk — fully offline. From 0.99 €, no subscription.</p>
+  <a class="badge" href="#tours"><span>🎧</span><span><small data-i18n="badge_small">Soon on the</small>App Store</span></a>
+  <div class="note" data-i18n="note">iPhone · works offline · 6 languages</div>
 </div></div>
 
 <section id="tours"><div class="wrap">
-  <h2>Free tours to start</h2>
-  <p class="sub">Three full city walks, free right now. More cities on the way.</p>
+  <h2 data-i18n="free_title">Free tours to start</h2>
+  <p class="sub" data-i18n="free_sub">Three full city walks, free right now. More cities on the way.</p>
   <div class="tours">
-    <div class="card"><img src="img/frankfurt.jpg" alt="Frankfurt"><div class="b"><h3>Frankfurt: Old Town Secrets</h3><div class="meta">5.0 km · 15 stops</div><span class="free">FREE</span></div></div>
-    <div class="card"><img src="img/venice.jpg" alt="Venice"><div class="b"><h3>Venice: Heart of the Serene Republic</h3><div class="meta">2.3 km · 14 stops</div><span class="free">FREE</span></div></div>
-    <div class="card"><img src="img/barcelona.jpg" alt="Barcelona"><div class="b"><h3>Barcelona: Gothic Quarter &amp; El Born</h3><div class="meta">3.5 km · 15 stops</div><span class="free">FREE</span></div></div>
+    <div class="card"><img src="img/frankfurt.jpg" alt="Frankfurt"><div class="b"><h3>Frankfurt: Old Town Secrets</h3><div class="meta">5.0 km · 15 <span data-i18n="stops">stops</span></div><span class="free" data-i18n="free_badge">FREE</span></div></div>
+    <div class="card"><img src="img/venice.jpg" alt="Venice"><div class="b"><h3>Venice: Heart of the Serene Republic</h3><div class="meta">2.3 km · 14 <span data-i18n="stops">stops</span></div><span class="free" data-i18n="free_badge">FREE</span></div></div>
+    <div class="card"><img src="img/barcelona.jpg" alt="Barcelona"><div class="b"><h3>Barcelona: Gothic Quarter &amp; El Born</h3><div class="meta">3.5 km · 15 <span data-i18n="stops">stops</span></div><span class="free" data-i18n="free_badge">FREE</span></div></div>
   </div>
 </div></section>
 
 <section id="why" style="background:var(--soft)"><div class="wrap">
-  <h2>Why AddToMap</h2>
+  <h2 data-i18n="why_title">Why AddToMap</h2>
   <div class="feat">
-    <div><div class="ic">🎧</div><h3>Real human voices</h3><p>Narrated by real people, not a robotic text-to-speech.</p></div>
-    <div><div class="ic">📶</div><h3>Fully offline</h3><p>Download once, walk anywhere — no roaming, no signal needed.</p></div>
-    <div><div class="ic">☕</div><h3>Price of a coffee</h3><p>Tours from 0.99 €. No subscription, no account.</p></div>
-    <div><div class="ic">🚶</div><h3>At your own pace</h3><p>No tour group, no schedule. Start, pause and resume whenever.</p></div>
+    <div><div class="ic">💡</div><h3 data-i18n="f1_t">Stories &amp; secrets</h3><p data-i18n="f1_d">Fascinating history and local secrets at every stop — curated, not generic.</p></div>
+    <div><div class="ic">📶</div><h3 data-i18n="f2_t">Fully offline</h3><p data-i18n="f2_d">Download once, walk anywhere — no roaming, no signal needed.</p></div>
+    <div><div class="ic">☕</div><h3 data-i18n="f3_t">Price of a coffee</h3><p data-i18n="f3_d">Tours from 0.99 €. No subscription, no account.</p></div>
+    <div><div class="ic">🚶</div><h3 data-i18n="f4_t">At your own pace</h3><p data-i18n="f4_d">No tour group, no schedule. Start, pause and resume whenever.</p></div>
   </div>
 </div></section>
 
 <section><div class="wrap">
-  <h2>How it works</h2>
+  <h2 data-i18n="how_title">How it works</h2>
   <div class="sub">&nbsp;</div>
   <div class="steps">
-    <div><div class="n">1</div><h3>Pick a city</h3><p>Browse tours and listen to a free preview.</p></div>
-    <div><div class="n">2</div><h3>Download it</h3><p>The whole tour saves to your phone for offline use.</p></div>
-    <div><div class="n">3</div><h3>Walk &amp; listen</h3><p>Follow the map; stories play as you reach each stop.</p></div>
+    <div><div class="n">1</div><h3 data-i18n="s1_t">Pick a city</h3><p data-i18n="s1_d">Browse tours and listen to a free preview.</p></div>
+    <div><div class="n">2</div><h3 data-i18n="s2_t">Download it</h3><p data-i18n="s2_d">The whole tour saves to your phone for offline use.</p></div>
+    <div><div class="n">3</div><h3 data-i18n="s3_t">Walk &amp; listen</h3><p data-i18n="s3_d">Follow the map; stories play as you reach each stop.</p></div>
   </div>
 </div></section>
 
 <section><div class="wrap"><div class="cta">
-  <h2>Coming soon to the App Store</h2>
-  <p class="sub">Follow us for the launch and new cities.</p>
+  <h2 data-i18n="cta_title">Coming soon to the App Store</h2>
+  <p class="sub" data-i18n="cta_sub">Follow us for the launch and new cities.</p>
   <a class="badge" href="https://instagram.com/addtomap"><span>📸</span><span>@addtomap</span></a>
 </div></div></section>
 
 <footer><div class="wrap">
   <div>
-    <a href="/privacy.html">Privacy</a>
+    <a href="/privacy.html" data-i18n="nav_privacy">Privacy</a>
     <a href="mailto:support@addtomap.co">support@addtomap.co</a>
     <a href="https://instagram.com/addtomap">Instagram</a>
     <a href="https://tiktok.com/@addtomap">TikTok</a>
@@ -109,5 +128,25 @@
   </div>
   <div>© AddToMap</div>
 </div></footer>
+
+<script>
+const I18N = {
+  en:{nav_tours:"Tours",nav_why:"Why",nav_privacy:"Privacy",nav_support:"Support",hero_h1:"Walk the city, hear its stories",hero_p:"Pick a city, follow the route on the map, and hear its stories as you walk — fully offline. From 0.99 €, no subscription.",badge_small:"Soon on the",note:"iPhone · works offline · 6 languages",free_title:"Free tours to start",free_sub:"Three full city walks, free right now. More cities on the way.",stops:"stops",free_badge:"FREE",why_title:"Why AddToMap",f1_t:"Stories & secrets",f1_d:"Fascinating history and local secrets at every stop — curated, not generic.",f2_t:"Fully offline",f2_d:"Download once, walk anywhere — no roaming, no signal needed.",f3_t:"Price of a coffee",f3_d:"Tours from 0.99 €. No subscription, no account.",f4_t:"At your own pace",f4_d:"No tour group, no schedule. Start, pause and resume whenever.",how_title:"How it works",s1_t:"Pick a city",s1_d:"Browse tours and listen to a free preview.",s2_t:"Download it",s2_d:"The whole tour saves to your phone for offline use.",s3_t:"Walk & listen",s3_d:"Follow the map; stories play as you reach each stop.",cta_title:"Coming soon to the App Store",cta_sub:"Follow us for the launch and new cities."},
+  de:{nav_tours:"Touren",nav_why:"Warum",nav_privacy:"Datenschutz",nav_support:"Support",hero_h1:"Erkunde die Stadt, hör ihre Geschichten",hero_p:"Wähle eine Stadt, folge der Route auf der Karte und höre ihre Geschichten beim Gehen — komplett offline. Ab 0,99 €, kein Abo.",badge_small:"Bald im",note:"iPhone · offline · 6 Sprachen",free_title:"Kostenlose Touren zum Start",free_sub:"Drei komplette Stadtrundgänge, jetzt gratis. Weitere Städte folgen.",stops:"Stopps",free_badge:"GRATIS",why_title:"Warum AddToMap",f1_t:"Geschichten & Geheimnisse",f1_d:"Spannende Geschichte und lokale Geheimnisse an jedem Stopp — kuratiert, nicht generisch.",f2_t:"Komplett offline",f2_d:"Einmal laden, überall gehen — kein Roaming, kein Signal nötig.",f3_t:"Preis eines Kaffees",f3_d:"Touren ab 0,99 €. Kein Abo, kein Konto.",f4_t:"In deinem Tempo",f4_d:"Keine Gruppe, kein Zeitplan. Starte, pausiere und mach weiter, wann du willst.",how_title:"So funktioniert's",s1_t:"Stadt wählen",s1_d:"Stöbere in Touren und hör dir eine kostenlose Vorschau an.",s2_t:"Herunterladen",s2_d:"Die ganze Tour wird für offline aufs Handy gespeichert.",s3_t:"Gehen & hören",s3_d:"Folge der Karte; Geschichten spielen an jedem Stopp.",cta_title:"Bald im App Store",cta_sub:"Folge uns für Launch und neue Städte."},
+  fr:{nav_tours:"Visites",nav_why:"Pourquoi",nav_privacy:"Confidentialité",nav_support:"Support",hero_h1:"Parcours la ville, écoute ses histoires",hero_p:"Choisis une ville, suis l'itinéraire sur la carte et écoute ses histoires en marchant — entièrement hors ligne. Dès 0,99 €, sans abonnement.",badge_small:"Bientôt sur l'",note:"iPhone · hors ligne · 6 langues",free_title:"Visites gratuites pour commencer",free_sub:"Trois balades complètes, gratuites dès maintenant. D'autres villes arrivent.",stops:"arrêts",free_badge:"GRATUIT",why_title:"Pourquoi AddToMap",f1_t:"Histoires & secrets",f1_d:"Histoire fascinante et secrets locaux à chaque arrêt — sélectionnés, pas génériques.",f2_t:"100 % hors ligne",f2_d:"Télécharge une fois, marche partout — ni roaming ni réseau.",f3_t:"Prix d'un café",f3_d:"Visites dès 0,99 €. Sans abonnement, sans compte.",f4_t:"À ton rythme",f4_d:"Pas de groupe, pas d'horaire. Démarre, mets en pause, reprends quand tu veux.",how_title:"Comment ça marche",s1_t:"Choisis une ville",s1_d:"Parcours les visites et écoute un aperçu gratuit.",s2_t:"Télécharge-la",s2_d:"Toute la visite est enregistrée sur ton téléphone, hors ligne.",s3_t:"Marche & écoute",s3_d:"Suis la carte ; les récits se lancent à chaque arrêt.",cta_title:"Bientôt sur l'App Store",cta_sub:"Suis-nous pour le lancement et les nouvelles villes."},
+  es:{nav_tours:"Tours",nav_why:"Por qué",nav_privacy:"Privacidad",nav_support:"Soporte",hero_h1:"Recorre la ciudad, escucha sus historias",hero_p:"Elige una ciudad, sigue la ruta en el mapa y escucha sus historias mientras caminas — totalmente sin conexión. Desde 0,99 €, sin suscripción.",badge_small:"Pronto en la",note:"iPhone · sin conexión · 6 idiomas",free_title:"Tours gratis para empezar",free_sub:"Tres recorridos completos, gratis ahora mismo. Más ciudades en camino.",stops:"paradas",free_badge:"GRATIS",why_title:"Por qué AddToMap",f1_t:"Historias y secretos",f1_d:"Historia fascinante y secretos locales en cada parada — seleccionados, no genéricos.",f2_t:"Totalmente sin conexión",f2_d:"Descarga una vez, camina donde sea — sin roaming ni señal.",f3_t:"El precio de un café",f3_d:"Tours desde 0,99 €. Sin suscripción, sin cuenta.",f4_t:"A tu ritmo",f4_d:"Sin grupo, sin horarios. Empieza, pausa y sigue cuando quieras.",how_title:"Cómo funciona",s1_t:"Elige una ciudad",s1_d:"Explora los tours y escucha una vista previa gratis.",s2_t:"Descárgalo",s2_d:"El tour completo se guarda en tu teléfono para usarlo sin conexión.",s3_t:"Camina y escucha",s3_d:"Sigue el mapa; las historias suenan al llegar a cada parada.",cta_title:"Pronto en la App Store",cta_sub:"Síguenos para el lanzamiento y nuevas ciudades."},
+  it:{nav_tours:"Tour",nav_why:"Perché",nav_privacy:"Privacy",nav_support:"Supporto",hero_h1:"Esplora la città, ascolta le sue storie",hero_p:"Scegli una città, segui il percorso sulla mappa e ascolta le sue storie mentre cammini — completamente offline. Da 0,99 €, senza abbonamento.",badge_small:"Presto su",note:"iPhone · offline · 6 lingue",free_title:"Tour gratuiti per iniziare",free_sub:"Tre percorsi cittadini completi, gratis ora. Altre città in arrivo.",stops:"tappe",free_badge:"GRATIS",why_title:"Perché AddToMap",f1_t:"Storie e segreti",f1_d:"Storia affascinante e segreti locali a ogni tappa — selezionati, non generici.",f2_t:"Totalmente offline",f2_d:"Scarica una volta, cammina ovunque — niente roaming né segnale.",f3_t:"Il prezzo di un caffè",f3_d:"Tour da 0,99 €. Senza abbonamento, senza account.",f4_t:"Al tuo ritmo",f4_d:"Niente gruppo, niente orari. Avvia, metti in pausa e riprendi quando vuoi.",how_title:"Come funziona",s1_t:"Scegli una città",s1_d:"Sfoglia i tour e ascolta un'anteprima gratuita.",s2_t:"Scaricalo",s2_d:"L'intero tour si salva sul telefono per l'uso offline.",s3_t:"Cammina e ascolta",s3_d:"Segui la mappa; le storie partono a ogni tappa.",cta_title:"Presto sull'App Store",cta_sub:"Seguici per il lancio e le nuove città."},
+  ru:{nav_tours:"Туры",nav_why:"Почему",nav_privacy:"Приватность",nav_support:"Поддержка",hero_h1:"Гуляй по городу — слушай его истории",hero_p:"Выбери город, иди по маршруту на карте и слушай истории на ходу — полностью офлайн. От 0,99 €, без подписки.",badge_small:"Скоро в",note:"iPhone · офлайн · 6 языков",free_title:"Бесплатные туры для старта",free_sub:"Три полных городских маршрута — бесплатно прямо сейчас. Новые города на подходе.",stops:"точек",free_badge:"БЕСПЛАТНО",why_title:"Почему AddToMap",f1_t:"Истории и секреты",f1_d:"Увлекательная история и местные секреты на каждой точке — отобранные, не шаблонные.",f2_t:"Полностью офлайн",f2_d:"Скачай один раз — иди где угодно, без роуминга и сети.",f3_t:"Цена чашки кофе",f3_d:"Туры от 0,99 €. Без подписки и аккаунта.",f4_t:"В своём темпе",f4_d:"Без группы и расписания. Старт, пауза и продолжение — когда хочешь.",how_title:"Как это работает",s1_t:"Выбери город",s1_d:"Смотри туры и слушай бесплатное превью.",s2_t:"Скачай",s2_d:"Весь тур сохраняется на телефон для офлайна.",s3_t:"Иди и слушай",s3_d:"Следуй карте; истории включаются на каждой точке.",cta_title:"Скоро в App Store",cta_sub:"Подпишись — расскажем о запуске и новых городах."}
+};
+function setLang(l){
+  if(!I18N[l]) l="en";
+  localStorage.setItem("lang",l); document.documentElement.lang=l;
+  document.querySelectorAll("[data-i18n]").forEach(function(e){
+    var v=I18N[l][e.getAttribute("data-i18n")]; if(v!=null) e.textContent=v;
+  });
+  var sel=document.getElementById("lang"); if(sel) sel.value=l;
+}
+setLang(localStorage.getItem("lang") || ((navigator.language||"en").slice(0,2)));
+</script>
 </body>
 </html>
