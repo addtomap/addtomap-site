@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AddToMap — Offline Audio Walking Tours</title>
+<meta name="description" content="Self-guided offline audio walking tours in a real human voice. Pick a city, follow the route, hear the stories as you walk. From 0.99 €, no subscription.">
+<meta property="og:title" content="AddToMap — Offline Audio Walking Tours">
+<meta property="og:description" content="Explore cities at your own pace with real human-voiced audio tours that work fully offline.">
+<meta property="og:type" content="website">
+<style>
+  :root{ --o:#F2770A; --ink:#15110d; --muted:#6b625a; --bg:#fff; --soft:#faf6f1; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:ui-rounded,-apple-system,"SF Pro Rounded",system-ui,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+  header{position:sticky;top:0;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid #0000000d;z-index:10}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-weight:800;font-size:22px;letter-spacing:.3px}
+  .logo span{color:var(--o)}
+  nav a{color:var(--muted);font-weight:600;margin-left:22px;font-size:15px}
+  nav a:hover{color:var(--ink)}
+  .hero{background:linear-gradient(180deg,var(--soft),#fff);padding:72px 0 56px;text-align:center}
+  .hero h1{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-.5px;max-width:16ch;margin:0 auto 16px}
+  .hero p{font-size:clamp(17px,2.5vw,21px);color:var(--muted);max-width:40ch;margin:0 auto 28px}
+  .badge{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;padding:12px 22px;border-radius:14px;font-weight:700}
+  .badge small{display:block;font-size:11px;font-weight:600;opacity:.8;line-height:1}
+  .note{color:var(--muted);font-size:13px;margin-top:12px}
+  section{padding:56px 0}
+  h2{font-size:clamp(24px,3.5vw,34px);font-weight:800;text-align:center;margin-bottom:8px;letter-spacing:-.3px}
+  .sub{text-align:center;color:var(--muted);max-width:46ch;margin:0 auto 36px}
+  .tours{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+  .card{border-radius:18px;overflow:hidden;background:var(--soft);box-shadow:0 1px 3px #0000000d}
+  .card img{width:100%;height:200px;object-fit:cover;display:block}
+  .card .b{padding:16px 18px}
+  .card h3{font-size:19px;font-weight:800}
+  .card .meta{color:var(--muted);font-size:14px;margin-top:4px}
+  .free{display:inline-block;background:#1aa34a;color:#fff;font-size:12px;font-weight:800;padding:3px 10px;border-radius:8px;margin-top:10px}
+  .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;margin-top:12px}
+  .feat div h3{font-size:18px;font-weight:800;margin-bottom:6px}
+  .feat div p{color:var(--muted);font-size:15px}
+  .feat .ic{font-size:30px;margin-bottom:8px}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px}
+  .steps div{text-align:center}
+  .steps .n{width:40px;height:40px;border-radius:50%;background:var(--o);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+  .cta{background:var(--soft);text-align:center;border-radius:22px;padding:48px 20px;margin:0 20px}
+  footer{border-top:1px solid #0000000d;padding:36px 0;color:var(--muted);font-size:14px}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+  footer a{color:var(--muted);margin-right:18px;font-weight:600}
+  footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="logo">AddTo<span>Map</span></div>
+  <nav><a href="#tours">Tours</a><a href="#why">Why</a><a href="/privacy.html">Privacy</a><a href="mailto:support@addtomap.co">Support</a></nav>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <h1>Audio walking tours, in a real human voice</h1>
+  <p>Pick a city, follow the route on the map, and hear its stories as you walk — fully offline. From 0.99 €, no subscription.</p>
+  <a class="badge" href="#tours"><span>🎧</span><span><small>Soon on the</small>App Store</span></a>
+  <div class="note">iPhone · works offline · 6 languages</div>
+</div></div>
+
+<section id="tours"><div class="wrap">
+  <h2>Free tours to start</h2>
+  <p class="sub">Three full city walks, free right now. More cities on the way.</p>
+  <div class="tours">
+    <div class="card"><img src="img/frankfurt.jpg" alt="Frankfurt"><div class="b"><h3>Frankfurt: Old Town Secrets</h3><div class="meta">5.0 km · 15 stops</div><span class="free">FREE</span></div></div>
+    <div class="card"><img src="img/venice.jpg" alt="Venice"><div class="b"><h3>Venice: Heart of the Serene Republic</h3><div class="meta">2.3 km · 14 stops</div><span class="free">FREE</span></div></div>
+    <div class="card"><img src="img/barcelona.jpg" alt="Barcelona"><div class="b"><h3>Barcelona: Gothic Quarter &amp; El Born</h3><div class="meta">3.5 km · 15 stops</div><span class="free">FREE</span></div></div>
+  </div>
+</div></section>
+
+<section id="why" style="background:var(--soft)"><div class="wrap">
+  <h2>Why AddToMap</h2>
+  <div class="feat">
+    <div><div class="ic">🎧</div><h3>Real human voices</h3><p>Narrated by real people, not a robotic text-to-speech.</p></div>
+    <div><div class="ic">📶</div><h3>Fully offline</h3><p>Download once, walk anywhere — no roaming, no signal needed.</p></div>
+    <div><div class="ic">☕</div><h3>Price of a coffee</h3><p>Tours from 0.99 €. No subscription, no account.</p></div>
+    <div><div class="ic">🚶</div><h3>At your own pace</h3><p>No tour group, no schedule. Start, pause and resume whenever.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>How it works</h2>
+  <div class="sub">&nbsp;</div>
+  <div class="steps">
+    <div><div class="n">1</div><h3>Pick a city</h3><p>Browse tours and listen to a free preview.</p></div>
+    <div><div class="n">2</div><h3>Download it</h3><p>The whole tour saves to your phone for offline use.</p></div>
+    <div><div class="n">3</div><h3>Walk &amp; listen</h3><p>Follow the map; stories play as you reach each stop.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap"><div class="cta">
+  <h2>Coming soon to the App Store</h2>
+  <p class="sub">Follow us for the launch and new cities.</p>
+  <a class="badge" href="https://instagram.com/addtomap"><span>📸</span><span>@addtomap</span></a>
+</div></div></section>
+
+<footer><div class="wrap">
+  <div>
+    <a href="/privacy.html">Privacy</a>
+    <a href="mailto:support@addtomap.co">support@addtomap.co</a>
+    <a href="https://instagram.com/addtomap">Instagram</a>
+    <a href="https://tiktok.com/@addtomap">TikTok</a>
+    <a href="https://youtube.com/@addtomap">YouTube</a>
+  </div>
+  <div>© AddToMap</div>
+</div></footer>
+</body>
+</html>
