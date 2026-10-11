@@ -105,9 +105,9 @@
   <a class="badge" href="#tours"><span>🎧</span><span><small data-i18n="badge_small">Soon on the</small>App Store</span></a>
   <div class="note" data-i18n="note">iPhone · works offline · 6 languages</div>
   <div class="herophones">
-    <img class="hp hp-side hp-l" src="img/screen-tour.jpg" alt="AddToMap — Barcelona tour overview" loading="lazy">
-    <img class="hp hp-c" src="img/app-home.png" alt="AddToMap app — browse free walking tours" loading="lazy">
-    <img class="hp hp-side hp-r" src="img/screen-photo.jpg" alt="AddToMap — story and photo at every stop" loading="lazy">
+    <img class="hp hp-side hp-l locimg" data-base="screen-tour" src="img/screen-tour_en.jpg" alt="AddToMap — Barcelona tour overview" loading="lazy">
+    <img class="hp hp-c locimg" data-base="screen-home" src="img/screen-home_en.jpg" alt="AddToMap app — browse free walking tours" loading="lazy">
+    <img class="hp hp-side hp-r locimg" data-base="screen-photo" src="img/screen-photo_en.jpg" alt="AddToMap — story and photo at every stop" loading="lazy">
   </div>
 </div></div>
 
@@ -133,9 +133,9 @@
   <p class="sub" data-i18n="screens_sub">A quick look inside the app — browse tours, follow the map, and listen as you walk.</p>
 </div>
 <div class="gallery">
-  <figure><img src="img/screen-tour.jpg" alt="AddToMap — tour overview with route and stops" loading="lazy"><figcaption data-i18n="cap_tour">Preview & start</figcaption></figure>
-  <figure><img src="img/screen-map.jpg" alt="AddToMap — follow the map and listen to each stop" loading="lazy"><figcaption data-i18n="cap_map">Follow the map</figcaption></figure>
-  <figure><img src="img/screen-photo.jpg" alt="AddToMap — photo and story at every stop" loading="lazy"><figcaption data-i18n="cap_photo">Stories at every stop</figcaption></figure>
+  <figure><img class="locimg" data-base="screen-tour" src="img/screen-tour_en.jpg" alt="AddToMap — tour overview with route and stops" loading="lazy"><figcaption data-i18n="cap_tour">Preview & start</figcaption></figure>
+  <figure><img class="locimg" data-base="screen-map" src="img/screen-map_en.jpg" alt="AddToMap — follow the map and listen to each stop" loading="lazy"><figcaption data-i18n="cap_map">Follow the map</figcaption></figure>
+  <figure><img class="locimg" data-base="screen-photo" src="img/screen-photo_en.jpg" alt="AddToMap — photo and story at every stop" loading="lazy"><figcaption data-i18n="cap_photo">Stories at every stop</figcaption></figure>
 </div>
 </section>
 
@@ -246,6 +246,11 @@ function setLang(l){
   });
   var m=MAIL[l]||MAIL.en, mh="mailto:support@addtomap.co?subject="+encodeURIComponent(m.s)+"&body="+encodeURIComponent(m.b);
   document.querySelectorAll("a.supportmail").forEach(function(a){ a.href=mh; });
+  document.querySelectorAll("img.locimg").forEach(function(img){
+    var base=img.getAttribute("data-base");
+    img.onerror=function(){ img.onerror=null; img.src="img/"+base+"_en.jpg"; };  // fall back to English
+    img.src="img/"+base+"_"+l+".jpg";
+  });
   var sel=document.getElementById("lang"); if(sel) sel.value=l;
   syncVoiceButtons();
   if(pvBtn){ var b=pvBtn; stopPreview(); startPreview(b); } // keep preview, switch language
