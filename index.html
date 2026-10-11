@@ -188,7 +188,7 @@ const I18N = {
 };
 // ---- Tour preview playback (language- + voice-aware) ----
 var previewVoice = (localStorage.getItem("pv")==="f") ? "f" : "m";
-var pvAudio=null, pvBtn=null;
+var pvAudio=null, pvMusic=null, pvBtn=null;
 
 function t(key){ var l=document.documentElement.lang||"en"; return (I18N[l]&&I18N[l][key])||I18N.en[key]||key; }
 function previewSrc(slug){
@@ -204,14 +204,18 @@ function setPvBtn(btn,playing){
 }
 function stopPreview(){
   if(pvAudio){ pvAudio.pause(); pvAudio=null; }
+  if(pvMusic){ pvMusic.pause(); pvMusic=null; }
   if(pvBtn){ setPvBtn(pvBtn,false); pvBtn=null; }
 }
 function startPreview(btn){
   var slug=btn.getAttribute("data-slug");
   pvAudio=new Audio(previewSrc(slug));
+  pvMusic=new Audio("audio/"+slug+"_music.mp3");   // looping background bed, like the tour
+  pvMusic.loop=true; pvMusic.volume=0.12;
   pvBtn=btn; setPvBtn(btn,true);
   pvAudio.onended=stopPreview; pvAudio.onerror=stopPreview;
   pvAudio.play().catch(function(){ stopPreview(); });
+  pvMusic.play().catch(function(){});
 }
 function togglePreview(btn){
   var same=(pvBtn===btn);
