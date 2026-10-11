@@ -89,7 +89,7 @@
       <a href="#screens" data-i18n="nav_screens">In action</a>
       <a href="#why" data-i18n="nav_why">Why</a>
       <a href="/privacy.html" data-i18n="nav_privacy">Privacy</a>
-      <a href="mailto:support@addtomap.co" data-i18n="nav_support">Support</a>
+      <a class="supportmail" href="mailto:support@addtomap.co" data-i18n="nav_support">Support</a>
     </span>
     <select class="langsel" id="lang" onchange="setLang(this.value)" aria-label="Language">
       <option value="en">English</option><option value="de">Deutsch</option>
@@ -169,7 +169,7 @@
 <footer><div class="wrap">
   <div>
     <a href="/privacy.html" data-i18n="nav_privacy">Privacy</a>
-    <a href="mailto:support@addtomap.co">support@addtomap.co</a>
+    <a class="supportmail" href="mailto:support@addtomap.co">support@addtomap.co</a>
     <a href="https://instagram.com/addtomap">Instagram</a>
     <a href="https://tiktok.com/@addtomap">TikTok</a>
     <a href="https://youtube.com/@addtomap">YouTube</a>
@@ -230,12 +230,22 @@ function setVoice(v){
   if(pvBtn){ var b=pvBtn; stopPreview(); startPreview(b); } // restart in new voice
 }
 
+var MAIL = {
+  en:{s:"AddToMap — feedback",b:"Hi AddToMap team,\n\n"},
+  de:{s:"AddToMap — Feedback",b:"Hallo AddToMap-Team,\n\n"},
+  fr:{s:"AddToMap — avis / question",b:"Bonjour l'équipe AddToMap,\n\n"},
+  es:{s:"AddToMap — comentarios",b:"Hola equipo de AddToMap,\n\n"},
+  it:{s:"AddToMap — feedback",b:"Ciao team di AddToMap,\n\n"},
+  ru:{s:"AddToMap — отзыв",b:"Здравствуйте, команда AddToMap!\n\n"}
+};
 function setLang(l){
   if(!I18N[l]) l="en";
   localStorage.setItem("lang",l); document.documentElement.lang=l;
   document.querySelectorAll("[data-i18n]").forEach(function(e){
     var v=I18N[l][e.getAttribute("data-i18n")]; if(v!=null) e.textContent=v;
   });
+  var m=MAIL[l]||MAIL.en, mh="mailto:support@addtomap.co?subject="+encodeURIComponent(m.s)+"&body="+encodeURIComponent(m.b);
+  document.querySelectorAll("a.supportmail").forEach(function(a){ a.href=mh; });
   var sel=document.getElementById("lang"); if(sel) sel.value=l;
   syncVoiceButtons();
   if(pvBtn){ var b=pvBtn; stopPreview(); startPreview(b); } // keep preview, switch language
