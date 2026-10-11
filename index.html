@@ -9,7 +9,7 @@
 <meta property="og:description" content="Explore cities at your own pace with self-guided audio tours that work fully offline.">
 <meta property="og:image" content="https://addtomap.co/img/frankfurt.jpg">
 <meta property="og:type" content="website">
-<meta name="build" content="20261011161231"><!-- bumped by stamp.sh on every deploy -->
+<meta name="build" content="20261011161527"><!-- bumped by stamp.sh on every deploy -->
 <meta http-equiv="Cache-Control" content="no-cache">
 <style>
   :root{ --o:#F2770A; --ink:#15110d; --muted:#6b625a; --bg:#fff; --soft:#faf6f1; }
@@ -213,7 +213,7 @@ function startPreview(btn){
   var slug=btn.getAttribute("data-slug");
   pvAudio=new Audio(previewSrc(slug));
   pvMusic=new Audio("audio/"+slug+"_music.mp3");   // looping background bed, like the tour
-  pvMusic.loop=true; pvMusic.volume=0.12;
+  pvMusic.loop=true; pvMusic.volume=0.04;   // match the app's quiet background bed (voice at 1.0)
   pvBtn=btn; setPvBtn(btn,true);
   pvAudio.onended=stopPreview; pvAudio.onerror=stopPreview;
   pvAudio.play().catch(function(){ stopPreview(); });
