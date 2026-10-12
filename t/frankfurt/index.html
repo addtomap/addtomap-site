@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frankfurt: Old Town Secrets — AddToMap</title>
+<meta name="description" content="15 stops, 5.6 km. From the medieval town hall and the imperial cathedral to the skyscrapers and the old iron bridge over the Main. A self-guided audio walk that works offline.">
+<meta property="og:title" content="Frankfurt: Old Town Secrets">
+<meta property="og:description" content="15 stops, 5.6 km. From the medieval town hall and the imperial cathedral to the skyscrapers and the old iron bridge over the Main. A self-guided audio walk that works offline.">
+<meta property="og:image" content="https://addtomap.co/img/frankfurt.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="800">
+<meta property="og:url" content="https://addtomap.co/t/frankfurt">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AddToMap">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Frankfurt: Old Town Secrets">
+<meta name="twitter:description" content="15 stops, 5.6 km. From the medieval town hall and the imperial cathedral to the skyscrapers and the old iron bridge over the Main. A self-guided audio walk that works offline.">
+<meta name="twitter:image" content="https://addtomap.co/img/frankfurt.jpg">
+<link rel="canonical" href="https://addtomap.co/t/frankfurt">
+<style>
+  :root{--o:#F2770A;--ink:#15110d;--muted:#6b625a}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:ui-rounded,-apple-system,"SF Pro Rounded",system-ui,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:#fff;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:560px;margin:0 auto;padding:28px 20px 48px;text-align:center}
+  .brand{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:18px;margin-bottom:18px}
+  .brand img{width:28px;height:28px} .brand b{color:var(--o)}
+  img.cover{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:18px;box-shadow:0 14px 40px #0002}
+  h1{font-size:26px;line-height:1.2;margin:18px 0 8px}
+  p{color:var(--muted);margin-bottom:22px}
+  .btn{display:block;background:var(--o);color:#fff;font-weight:700;font-size:17px;padding:15px 18px;border-radius:14px;text-decoration:none;margin-bottom:10px}
+  .btn.sec{background:#faf6f1;color:var(--ink)}
+  small{display:block;color:var(--muted);margin-top:14px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="brand" href="/"><img src="/img/logo.png" alt="">AddTo<b>Map</b></a>
+  <img class="cover" src="/img/frankfurt.jpg" alt="Frankfurt: Old Town Secrets">
+  <h1>Frankfurt: Old Town Secrets</h1>
+  <p>15 stops, 5.6 km. From the medieval town hall and the imperial cathedral to the skyscrapers and the old iron bridge over the Main. A self-guided audio walk that works offline.</p>
+  <a class="btn" id="open" href="addtomap://tour/frankfurt">Open in the AddToMap app</a>
+  <a class="btn sec" href="/?tour=frankfurt">Don't have the app yet? See the tour</a>
+  <small>Free, self-guided, works offline. iPhone.</small>
+</div>
+<script>
+// Shared from the app: on an iPhone try the app first, then fall back to the tour card on the main page.
+(function(){
+  var slug="frankfurt";
+  if(/iPhone|iPad|iPod/.test(navigator.userAgent)){
+    var t=setTimeout(function(){ location.replace("/?tour="+slug); },1500);
+    window.addEventListener("pagehide",function(){ clearTimeout(t); });
+    location.href="addtomap://tour/"+slug;
+  }
+})();
+</script>
+</body>
+</html>
