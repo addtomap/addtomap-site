@@ -9,7 +9,7 @@
 <meta property="og:description" content="Explore cities at your own pace with self-guided audio tours that work fully offline.">
 <meta property="og:image" content="https://addtomap.co/img/frankfurt.jpg">
 <meta property="og:type" content="website">
-<meta name="build" content="20261013093134"><!-- bumped by stamp.sh on every deploy -->
+<meta name="build" content="20261013144140"><!-- bumped by stamp.sh on every deploy -->
 <meta http-equiv="Cache-Control" content="no-cache">
 <style>
   :root{ --o:#F2770A; --ink:#15110d; --muted:#6b625a; --bg:#fff; --soft:#faf6f1; }
@@ -124,8 +124,8 @@
   <div class="voicebar">
     <span class="vlab" data-i18n="voice_label">Guide voice:</span>
     <span class="voicetoggle">
-      <button id="vm" class="on" onclick="setVoice('m')" data-i18n="voice_male">Male</button>
-      <button id="vf" onclick="setVoice('f')" data-i18n="voice_female">Female</button>
+      <button id="vf" class="on" onclick="setVoice('f')" data-i18n="voice_female">Female</button>
+      <button id="vm" onclick="setVoice('m')" data-i18n="voice_male">Male</button>
     </span>
   </div>
   <div class="tours">
@@ -136,10 +136,10 @@
   <h2 class="paidh" data-i18n="paid_title">More cities, 2,99 € each</h2>
   <p class="sub" data-i18n="paid_sub">One-time purchase, yours for good. Narration is being recorded; the tours go live in the app as soon as it is done.</p>
   <div class="tours">
-    <div class="card" id="tour-rome-ancient" data-slug="rome-ancient"><img src="img/rome-ancient.jpg" alt="Rome"><div class="b"><h3><a href="/t/rome-ancient/">Rome: Ancient Rome, from the Colosseum to the Ghetto</a></h3><div class="meta">2.6 km · 8 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">2,99 €</span><span class="soon" data-i18n="soon_badge">Coming soon</span></div></div></div>
-    <div class="card" id="tour-rome-baroque" data-slug="rome-baroque"><img src="img/rome-baroque.jpg" alt="Rome"><div class="b"><h3><a href="/t/rome-baroque/">Rome: Baroque Rome, from Campo de' Fiori to the Spanish Steps</a></h3><div class="meta">3.7 km · 8 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">2,99 €</span><span class="soon" data-i18n="soon_badge">Coming soon</span></div></div></div>
-    <div class="card" id="tour-paris-cite-saint-germain" data-slug="paris-cite-saint-germain"><img src="img/paris-cite.jpg" alt="Paris"><div class="b"><h3><a href="/t/paris-cite-saint-germain/">Paris: Île de la Cité and Saint-Germain</a></h3><div class="meta">3.2 km · 7 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">2,99 €</span><span class="soon" data-i18n="soon_badge">Coming soon</span></div></div></div>
-    <div class="card" id="tour-paris-louvre-champs-elysees" data-slug="paris-louvre-champs-elysees"><img src="img/paris-louvre.jpg" alt="Paris"><div class="b"><h3><a href="/t/paris-louvre-champs-elysees/">Paris: From the Louvre to the Champs-Élysées</a></h3><div class="meta">3.9 km · 7 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">2,99 €</span><span class="soon" data-i18n="soon_badge">Coming soon</span></div></div></div>
+    <div class="card" id="tour-rome-ancient" data-slug="rome-ancient"><img src="img/rome-ancient.jpg" alt="Rome"><div class="b"><h3><a href="/t/rome-ancient/">Rome: Ancient Rome, from the Colosseum to the Ghetto</a></h3><div class="meta">2.6 km · 8 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">2,99 €</span><span class="soon" data-i18n="soon_badge">Coming soon</span><button class="pvbtn" data-slug="rome-ancient" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
+    <div class="card" id="tour-rome-baroque" data-slug="rome-baroque"><img src="img/rome-baroque.jpg" alt="Rome"><div class="b"><h3><a href="/t/rome-baroque/">Rome: Baroque Rome, from Largo Argentina to the Spanish Steps</a></h3><div class="meta">3.7 km · 8 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">2,99 €</span><span class="soon" data-i18n="soon_badge">Coming soon</span><button class="pvbtn" data-slug="rome-baroque" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
+    <div class="card" id="tour-paris-cite-saint-germain" data-slug="paris-cite-saint-germain"><img src="img/paris-cite.jpg" alt="Paris"><div class="b"><h3><a href="/t/paris-cite-saint-germain/">Paris: Île de la Cité and Saint-Germain</a></h3><div class="meta">3.3 km · 7 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">2,99 €</span><span class="soon" data-i18n="soon_badge">Coming soon</span><button class="pvbtn" data-slug="paris-cite-saint-germain" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
+    <div class="card" id="tour-paris-louvre-champs-elysees" data-slug="paris-louvre-champs-elysees"><img src="img/paris-louvre.jpg" alt="Paris"><div class="b"><h3><a href="/t/paris-louvre-champs-elysees/">Paris: From the Louvre to the Champs-Élysées</a></h3><div class="meta">3.9 km · 7 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">2,99 €</span><span class="soon" data-i18n="soon_badge">Coming soon</span><button class="pvbtn" data-slug="paris-louvre-champs-elysees" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
   </div>
 </div></section>
 
@@ -202,7 +202,7 @@ const I18N = {
   ru:{paid_title:"Больше городов, по 2,99 €",paid_sub:"Покупка один раз и навсегда. Озвучка записывается, туры появятся в приложении, как только она будет готова.",soon_badge:"Скоро",nav_tours:"Туры",nav_screens:"В действии",nav_why:"Почему",nav_privacy:"Приватность",nav_support:"Поддержка",hero_h1:"Гуляй по городу — слушай его истории",hero_p:"Выбери город, иди по маршруту на карте и слушай истории на ходу — полностью офлайн. Бесплатные туры для старта, остальные города покупаются один раз, без подписки.",badge_small:"Скоро в",note:"iPhone · офлайн · 6 языков",free_title:"Много бесплатных туров для старта",free_sub:"Полные самостоятельные маршруты — бесплатно прямо сейчас, новые добавляются регулярно. Нажми на тур, чтобы послушать бесплатное превью.",stops:"точек",free_badge:"БЕСПЛАТНО",why_title:"Почему AddToMap",f1_t:"Истории и секреты",f1_d:"Увлекательная история и местные секреты на каждой точке — отобранные, не шаблонные.",f2_t:"Полностью офлайн",f2_d:"Скачай один раз — иди где угодно, без роуминга и сети.",f3_t:"Без подписки",f3_d:"Бесплатные туры для старта. Новые города покупаются один раз и остаются навсегда. Без аккаунта.",f4_t:"В своём темпе",f4_d:"Без группы и расписания. Старт, пауза и продолжение — когда хочешь.",how_title:"Как это работает",s1_t:"Выбери город",s1_d:"Смотри туры и слушай бесплатное превью.",s2_t:"Скачай",s2_d:"Весь тур сохраняется на телефон для офлайна.",s3_t:"Иди и слушай",s3_d:"Следуй карте; истории включаются на каждой точке.",cta_title:"Скоро в App Store",cta_sub:"Подпишись — расскажем о запуске и новых городах.",preview_play:"Превью",preview_playing:"Играет…",voice_label:"Голос гида:",voice_male:"Мужской",voice_female:"Женский",f5_t:"Голос на выбор",f5_d:"Мужской или женский гид? Переключай в любой момент там, где у тура есть оба голоса.",screens_title:"Как это выглядит",screens_sub:"Загляни внутрь приложения — выбирай туры, следуй карте и слушай на ходу.",cap_tour:"Превью и старт",cap_map:"Следуй карте",cap_photo:"Истории на каждой точке",cap_voice:"Голос на выбор"}
 };
 // ---- Tour preview playback (language- + voice-aware) ----
-var previewVoice = (localStorage.getItem("pv")==="f") ? "f" : "m";
+var previewVoice = (localStorage.getItem("pv")==="m") ? "m" : "f";   // female guide by default, like the app
 var pvAudio=null, pvMusic=null, pvBtn=null;
 
 function t(key){ var l=document.documentElement.lang||"en"; return (I18N[l]&&I18N[l][key])||I18N.en[key]||key; }
@@ -226,6 +226,7 @@ function startPreview(btn){
   var slug=btn.getAttribute("data-slug");
   pvAudio=new Audio(previewSrc(slug));
   pvMusic=new Audio("audio/"+slug+"_music.mp3");   // looping background bed, like the tour
+  pvMusic.onerror=function(){ if(pvMusic && pvMusic.src.indexOf("background_music")<0){ pvMusic.src="audio/background_music.mp3"; pvMusic.play().catch(function(){}); } }; // tours without their own bed share the app's default one
   pvMusic.loop=true; pvMusic.volume=0.04;   // match the app's quiet background bed (voice at 1.0)
   pvBtn=btn; setPvBtn(btn,true);
   pvAudio.onended=stopPreview; pvAudio.onerror=stopPreview;
