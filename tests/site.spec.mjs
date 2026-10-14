@@ -87,6 +87,9 @@ test('every tour card opens a working tour page', async ({ page }) => {
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /^https:\/\/addtomap\.co\/img\//);
     const cover = page.locator('img.cover');
     await cover.scrollIntoViewIfNeeded();
+    // the width/height attributes must not override the 3:2 box (height:auto in the CSS)
+    const ratio = await cover.evaluate((i) => i.clientWidth / i.clientHeight);
+    expect(ratio, `${href} cover box`).toBeCloseTo(1.5, 1);
     await expect.poll(() => cover.evaluate((i) => i.complete && i.naturalWidth > 0), { message: `${href} cover` }).toBe(true);
     expect(w.problems, href).toEqual([]);
   }
