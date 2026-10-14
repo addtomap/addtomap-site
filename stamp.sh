@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # stamp.sh — bump the site build stamp so returning visitors auto-refresh.
-# Run this before committing/pushing a site change:
-#   ./stamp.sh && git add -A && git commit -m "..." && git push
+# The deploy workflow (.github/workflows/deploy.yml) runs this on every publish; there is no need
+# to run it by hand before committing.
 set -euo pipefail
 cd "$(dirname "$0")"
 STAMP="$(date -u +%Y%m%d%H%M%S)"

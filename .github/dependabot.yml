@@ -1,0 +1,15 @@
+# Weekly dependency PRs, grouped: GitHub Actions and the npm dev tools (Playwright, html-validate).
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: weekly, day: monday, time: "07:00", timezone: Europe/Berlin }
+    groups: { actions: { patterns: ["*"] } }
+    labels: [ci, dependencies]
+    commit-message: { prefix: "ci" }
+  - package-ecosystem: npm
+    directory: /
+    schedule: { interval: weekly, day: monday, time: "07:00", timezone: Europe/Berlin }
+    groups: { dev-tools: { patterns: ["*"] } }
+    labels: [dependencies]
+    commit-message: { prefix: "deps" }
