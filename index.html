@@ -9,7 +9,7 @@
 <meta property="og:description" content="Explore cities at your own pace with self-guided audio tours that work fully offline.">
 <meta property="og:image" content="https://addtomap.co/img/frankfurt.jpg">
 <meta property="og:type" content="website">
-<meta name="build" content="20261013204024"><!-- bumped by stamp.sh on every deploy -->
+<meta name="build" content="20261014084454"><!-- bumped by stamp.sh on every deploy -->
 <meta http-equiv="Cache-Control" content="no-cache">
 <style>
   :root{ --o:#F2770A; --ink:#15110d; --muted:#6b625a; --bg:#fff; --soft:#faf6f1; }
@@ -113,7 +113,7 @@
   <div class="note" data-i18n="note">iPhone · works offline · 6 languages</div>
   <div class="herophones">
     <img class="hp hp-side hp-l locimg" data-base="screen-tour" src="img/screen-tour_en.jpg" alt="AddToMap — Barcelona tour overview" loading="lazy">
-    <img class="hp hp-c locimg" data-base="screen-home" src="img/screen-home_en.jpg" alt="AddToMap app — browse free walking tours" loading="lazy">
+    <video class="hp hp-c" id="herovideo" src="video/hero_en.mp4" poster="img/hero_poster_en.jpg" autoplay muted loop playsinline preload="auto" aria-label="AddToMap app: pick a tour, follow the map, and the story starts when you arrive"></video>
     <img class="hp hp-side hp-r locimg" data-base="screen-photo" src="img/screen-photo_en.jpg" alt="AddToMap — story and photo at every stop" loading="lazy">
   </div>
 </div></div>
@@ -271,6 +271,8 @@ function setLang(l){
     img.onerror=function(){ img.onerror=null; img.src="img/"+base+"_en.jpg"; };  // fall back to English
     img.src="img/"+base+"_"+l+".jpg";
   });
+  var hv=document.getElementById("herovideo");  // hero loop: honour reduced motion, keep the poster
+  if(hv && window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches){ hv.removeAttribute("autoplay"); hv.pause(); }
   var sel=document.getElementById("lang"); if(sel) sel.value=l;
   syncVoiceButtons();
   if(pvBtn){ var b=pvBtn; stopPreview(); startPreview(b); } // keep preview, switch language
