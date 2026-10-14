@@ -107,6 +107,46 @@ test('no horizontal scrolling', async ({ page }) => {
   expect(overflow).toBeLessThanOrEqual(1);
 });
 
+/** Letterbox guard. A <video> (object-fit: contain by default) or an img with object-fit contain/none
+ *  paints its content inside whatever box CSS gives it — so a stray fixed height (e.g. a width/height
+ *  attribute that CSS forgets to override with height:auto) shows up as a tall white band around the
+ *  media instead of an error. Every such element must render at its own intrinsic aspect ratio. */
+test('no media is letterboxed: videos and contain-fit images keep their intrinsic aspect ratio', async ({ page }) => {
+  await page.goto('/');
+  await expect.poll(() => page.locator('#herovideo').evaluate((v) => v.videoWidth > 0)).toBe(true);
+  const offenders = await page.evaluate(() => {
+    const out = [];
+    for (const el of document.querySelectorAll('video, img')) {
+      const fit = getComputedStyle(el).objectFit;
+      const isVideo = el.tagName === 'VIDEO';
+      if (!isVideo && !['contain', 'scale-down', 'none'].includes(fit)) continue;   // fill/cover never letterbox
+      const iw = isVideo ? el.videoWidth : el.naturalWidth, ih = isVideo ? el.videoHeight : el.naturalHeight;
+      const r = el.getBoundingClientRect();
+      if (!iw || !ih || r.width < 100 || r.height < 2) continue;                    // not loaded / hidden / icons (the 30 px logo is boxed on purpose)
+      const expected = r.width * ih / iw;
+      if (Math.abs(r.height - expected) > Math.max(3, expected * 0.02)) {
+        out.push(`${el.tagName.toLowerCase()}#${el.id || el.className}: box ${Math.round(r.width)}×${Math.round(r.height)} vs intrinsic ${iw}×${ih}`);
+      }
+    }
+    return out;
+  });
+  expect(offenders).toEqual([]);
+});
+
+test('hero phone: the loop fills a phone-shaped frame right under the headline', async ({ page }) => {
+  await page.goto('/');
+  const video = page.locator('#herovideo');
+  await expect.poll(() => video.evaluate((v) => v.videoWidth > 0)).toBe(true);
+  const m = await video.evaluate((v) => {
+    const r = v.getBoundingClientRect();
+    return { w: r.width, h: r.height, top: r.top + window.scrollY };
+  });
+  expect(m.h / m.w).toBeGreaterThan(1.9);     // a phone: taller than wide…
+  expect(m.h / m.w).toBeLessThan(2.4);        // …but never a 300×1300 tower (the Oct-14 regression)
+  const vh = page.viewportSize()?.height ?? 720;
+  expect(m.top).toBeLessThan(vh * 1.6);       // starts within the first scroll, not pushed down by a band
+});
+
 test.describe('reduced motion', () => {
   test.use({ reducedMotion: 'reduce' });
   test('the hero loop stays still', async ({ page }) => {
