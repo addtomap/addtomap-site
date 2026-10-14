@@ -18,6 +18,7 @@ import argparse, fcntl, json, os, pathlib, re, subprocess, sys, time
 REPOS = ["addtomap/addtomap-site"]
 STATE_DIR = pathlib.Path.home() / ".local/state/addtomap-pr-review"
 MAX_DIFF = 180_000            # characters of diff sent to the model
+MAX_TRIES = 5                 # failed reviews per head commit before giving up
 GUIDE = {
     "addtomap/addtomap-site": """addtomap.co is the static marketing site of AddToMap (iOS app of offline audio walking tours),
 plain HTML/CSS/vanilla JS on GitHub Pages: index.html (landing, inline CSS/JS, I18N table for en/de/fr/es/it/ru),
@@ -165,15 +166,21 @@ def main():
                 continue
             if not a.pr and (pr["isDraft"] or pr["isCrossRepository"] or state.get(key) == pr["headRefOid"]):
                 continue
+            fails = state.get(f"{key}:fails", {})
+            if not a.pr and fails.get("sha") == pr["headRefOid"] and fails.get("n", 0) >= MAX_TRIES:
+                continue   # gave up on this commit; a new push (or --pr) tries again
             try:
                 review(repo, pr, a.dry_run)
                 if not a.dry_run:
                     state[key] = pr["headRefOid"]; state_file.write_text(json.dumps(state, indent=1))
             except Exception as e:
                 print(f"{time.strftime('%F %T')} {key}: {e}", file=sys.stderr)
-                if not a.dry_run:   # never leave the head stuck at "pending"; the next run (1 min) retries
+                if not a.dry_run:   # never leave the head stuck at "pending"; retried next minute, MAX_TRIES per commit
+                    n = fails.get("n", 0) + 1 if fails.get("sha") == pr["headRefOid"] else 1
+                    state[f"{key}:fails"] = {"sha": pr["headRefOid"], "n": n}; state_file.write_text(json.dumps(state, indent=1))
                     try:
-                        set_status(repo, pr["headRefOid"], "error", f"Claude review failed, retrying: {e}")
+                        set_status(repo, pr["headRefOid"], "error",
+                                   f"Claude review failed ({n}/{MAX_TRIES}){', retrying' if n < MAX_TRIES else ', gave up'}: {e}")
                     except Exception as e2:
                         print(f"{time.strftime('%F %T')} {key}: status not set: {e2}", file=sys.stderr)
 
