@@ -53,6 +53,9 @@
     var t=setTimeout(function(){ location.replace("/?tour="+slug); },1500);
     window.addEventListener("pagehide",function(){ clearTimeout(t); });
     location.href="addtomap://tour/"+slug;
+  } else {
+    // No app on this device (desktop, Android): the "open in the app" page makes no sense → straight to the tour.
+    location.replace("/?tour="+slug);
   }
 })();
 </script>
