@@ -40,7 +40,7 @@
   .soft{background:var(--soft)}
   .herophones{position:relative;width:300px;margin:52px auto 0}
   .hp{border-radius:30px;border:1px solid #00000010;box-shadow:0 24px 60px #00000026;background:#fff}
-  .hp-c{position:relative;display:block;width:100%;z-index:3}
+  .hp-c{position:relative;display:block;width:100%;height:auto;z-index:3}  /* height:auto — the width/height attrs only reserve the aspect ratio; without it the 1300px attr becomes the box height and the loop sits in a tall white band */
   .hp-side{position:absolute;bottom:14px;width:76%;z-index:1}
   .hp-l{left:-46%;transform:rotate(-8deg)}
   .hp-r{right:-46%;transform:rotate(8deg)}
