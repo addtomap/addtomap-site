@@ -9,7 +9,7 @@
 <meta property="og:description" content="Explore cities at your own pace with self-guided audio tours that work fully offline.">
 <meta property="og:image" content="https://addtomap.co/img/frankfurt.jpg">
 <meta property="og:type" content="website">
-<meta name="build" content="20261014084454"><!-- bumped by stamp.sh on every deploy -->
+<meta name="build" content="20261014094823"><!-- bumped by stamp.sh on every deploy -->
 <meta http-equiv="Cache-Control" content="no-cache">
 <style>
   :root{ --o:#F2770A; --ink:#15110d; --muted:#6b625a; --bg:#fff; --soft:#faf6f1; }
@@ -271,8 +271,16 @@ function setLang(l){
     img.onerror=function(){ img.onerror=null; img.src="img/"+base+"_en.jpg"; };  // fall back to English
     img.src="img/"+base+"_"+l+".jpg";
   });
-  var hv=document.getElementById("herovideo");  // hero loop: honour reduced motion, keep the poster
-  if(hv && window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches){ hv.removeAttribute("autoplay"); hv.pause(); }
+  var hv=document.getElementById("herovideo");  // hero loop recorded in each UI language; honour reduced motion
+  if(hv){
+    var still=window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches, want="video/hero_"+l+".mp4";
+    if(still){ hv.removeAttribute("autoplay"); hv.pause(); }
+    if(hv.getAttribute("src")!==want){
+      hv.onerror=function(){ hv.onerror=null; hv.poster="img/hero_poster_en.jpg"; hv.src="video/hero_en.mp4"; if(!still) hv.play().catch(function(){}); };
+      hv.poster="img/hero_poster_"+l+".jpg"; hv.src=want; hv.load();
+      if(!still) hv.play().catch(function(){});
+    }
+  }
   var sel=document.getElementById("lang"); if(sel) sel.value=l;
   syncVoiceButtons();
   if(pvBtn){ var b=pvBtn; stopPreview(); startPreview(b); } // keep preview, switch language
