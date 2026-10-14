@@ -43,7 +43,7 @@ branch → PR → ci (static, e2e, lighthouse) + Claude review → squash-merge 
 | Workflow | When | What |
 |---|---|---|
 | `ci.yml` | every PR, push to `main` | `static` (check + html-validate), `e2e` (Playwright), `lighthouse` (accessibility / best practices / SEO below 0.9 fail, performance below 0.8 warns; report link in the job) |
-| Claude review (local) | new commit on a PR, within 5 min | `scripts/claude-pr-review.py` on the owner's Mac (launchd): a GitHub review with verdict + inline comments, see below |
+| Claude review (local) | new commit on a PR, within a minute | `scripts/claude-pr-review.py` on the owner's Mac (launchd): a GitHub review with verdict + inline comments, see below |
 | `deploy.yml` | push to `main` | stamps the build, publishes to GitHub Pages without the repo tooling, then waits until addtomap.co serves the new build and smoke-tests key URLs |
 | `links.yml` | Mondays, manual | external links (social, App Store); opens/updates an issue when one breaks |
 | Dependabot | Mondays | grouped updates for the actions and the npm dev tools |
@@ -62,9 +62,11 @@ The build stamp is set by the deploy job — no need to run `./stamp.sh` by hand
 
 Like the insta travel bot, the review runs on the owner's Mac instead of in GitHub Actions: the local
 `claude` CLI reaches Claude through the proxy configured in `~/.claude/settings.json`, so there is no
-API key in GitHub. A launchd agent runs `scripts/claude-pr-review.py` every 5 minutes; for each new
+API key in GitHub. A launchd agent runs `scripts/claude-pr-review.py` every minute; for each new
 head commit of a non-draft PR from this repo (never forks) Claude reads the diff (no tools) and returns
-findings, which the script posts with `gh` as one review: verdict, summary, inline comments.
+findings, which the script posts with `gh` as one review: verdict, summary, inline comments. It also sets
+the commit status `claude-review` (pending → success / failure). That check is deliberately not required
+(a Mac that is off must not block merges), so wait for it before merging when you want the review first.
 Reviews only happen while the Mac is on; the PR checks themselves do not depend on it.
 
 ```bash

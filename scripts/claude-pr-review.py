@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""claude-pr-review.py — Claude Code review of open PRs, run on the owner's Mac (launchd, every 5 min).
+"""claude-pr-review.py — Claude Code review of open PRs, run on the owner's Mac (launchd, every minute).
 
 Same strategy as the insta travel bot: no Anthropic API key in GitHub; the local `claude` CLI talks
 to Claude through the proxy configured in ~/.claude/settings.json, so reviews happen while this Mac
@@ -76,7 +76,19 @@ def commentable_lines(diff):
     return lines
 
 
+def set_status(repo, sha, state, description, url=None):
+    """Commit status "claude-review" on the PR head: pending while Claude reads, then success (approve) or
+    failure (request changes). Not a required check — a Mac that is off must not block merges."""
+    args = ["gh", "api", f"repos/{repo}/statuses/{sha}", "-X", "POST", "-f", f"state={state}",
+            "-f", "context=claude-review", "-f", f"description={description[:140]}"]
+    if url:
+        args += ["-f", f"target_url={url}"]
+    sh(*args)
+
+
 def review(repo, pr, dry_run):
+    if not dry_run:
+        set_status(repo, pr["headRefOid"], "pending", "Claude is reviewing this commit")
     diff = sh("gh", "pr", "diff", str(pr["number"]), "--repo", repo, timeout=120)
     truncated = len(diff) > MAX_DIFF
     prompt = PROMPT.format(number=pr["number"], title=pr["title"], repo=repo, guide=GUIDE.get(repo, ""),
@@ -114,8 +126,10 @@ def review(repo, pr, dry_run):
     payload = {"commit_id": pr["headRefOid"], "event": "COMMENT", "body": body, "comments": inline}
     if dry_run:
         print(json.dumps(payload, indent=1, ensure_ascii=False)); return
-    sh("gh", "api", f"repos/{repo}/pulls/{pr['number']}/reviews", "-X", "POST", "--input", "-",
-       input=json.dumps(payload))
+    posted = json.loads(sh("gh", "api", f"repos/{repo}/pulls/{pr['number']}/reviews", "-X", "POST", "--input", "-",
+                           input=json.dumps(payload)))
+    set_status(repo, pr["headRefOid"], "success" if verdict == "approve" else "failure",
+               f"Claude: {verdict}, {len(inline)} inline comment(s)", posted.get("html_url"))
     print(f"{repo}#{pr['number']} {pr['headRefOid'][:7]}: {verdict}, {len(inline)} inline comment(s)")
 
 
