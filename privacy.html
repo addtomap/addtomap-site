@@ -49,6 +49,15 @@ model, OS version, app version and coarse region — tied only to a random insta
 identifier, <strong>not to your identity</strong>. It is used solely to improve the
 app, never for advertising or tracking.</p>
 
+<h2>Ratings and feedback</h2>
+<p>After a tour the app may ask you to rate it from 1 to 5 stars. Ratings are stored
+<strong>anonymously</strong> as a per-tour counter (sum and number of ratings) in Google Firebase
+Firestore — nothing in them identifies you. If you choose to tell us what could be better, that text
+(with the rating, the tour, the app language and version — no identifier) is stored in Firestore and
+forwarded to us through a Cloudflare Worker to a Telegram chat so we can read it quickly. It is never
+shown in the app or published; please don't include personal data in it. With 4–5 stars the app shows
+Apple's standard App Store review prompt, which is handled entirely by Apple.</p>
+
 <h2>Tour content delivery</h2>
 <p>Tour files (audio, text, images) are downloaded from our content delivery
 network (<code>cdn.addtomap.co</code>, served via Cloudflare). Standard technical
@@ -57,8 +66,9 @@ files and protect the service; we do not use it to identify you.</p>
 
 <h2>Processors</h2>
 <ul>
-  <li><strong>Google Firebase</strong> (Analytics / Crashlytics) — diagnostics.</li>
-  <li><strong>Cloudflare</strong> — content delivery and security.</li>
+  <li><strong>Google Firebase</strong> (Analytics / Crashlytics / Firestore) — diagnostics, anonymous tour counters and feedback.</li>
+  <li><strong>Cloudflare</strong> — content delivery, security and the feedback relay (Workers).</li>
+  <li><strong>Telegram</strong> — delivery of the feedback you choose to send, to the developer's chat.</li>
   <li><strong>Apple</strong> — app distribution and, for paid tours, payment (Apple is the seller of record).</li>
 </ul>
 
@@ -75,7 +85,6 @@ any question or request, contact us.</p>
 
 <h2>Contact</h2>
 <p>Questions about privacy: <a href="mailto:support@addtomap.co">support@addtomap.co</a></p>
-<p class="muted">Data controller: AddToMap (company registration in progress — this
-section will name the registered entity and address once finalized).</p>
+<p class="muted">Data controller: the person named in the <a href="/impressum.html">Impressum</a>.</p>
 </body>
 </html>
