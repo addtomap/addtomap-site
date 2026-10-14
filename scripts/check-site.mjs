@@ -12,7 +12,7 @@ import vm from 'node:vm';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const LANGS = ['en', 'de', 'fr', 'es', 'it', 'ru'];
-const PAGES = ['index.html', 'privacy.html', 'impressum.html', 'support.html',
+const PAGES = ['index.html', 'privacy.html', ...['de', 'fr', 'es', 'it', 'ru'].map((l) => `privacy-${l}.html`).filter((f) => fs.existsSync(path.join(ROOT, f))), 'impressum.html', 'support.html',
   ...fs.readdirSync(path.join(ROOT, 't')).map((s) => `t/${s}/index.html`)];
 const BUDGET = { '.mp4': 3e6, '.jpg': 9e5, '.png': 9e5, '.mp3': 2e6, '.html': 1.5e5 };
 const errors = [], warnings = [];
@@ -64,6 +64,15 @@ for (const s of previewSlugs)
   for (const l of LANGS) for (const v of ['', '_f'])
     if (!exists(`audio/${s}_preview_${l}${v}.mp3`)) err(`audio/${s}_preview_${l}${v}.mp3 missing (tour preview)`);
 if (previewSlugs.size && !exists('audio/background_music.mp3')) err('audio/background_music.mp3 missing (preview music fallback)');
+
+// ---- privacy policy in every language (GDPR Art. 12: in the language of the audience) ---------
+for (const l of LANGS) {
+  const f = l === 'en' ? 'privacy.html' : `privacy-${l}.html`;
+  if (!exists(f)) { err(`${f} missing (privacy policy, ${l})`); continue; }
+  const html = read(f);
+  if (!html.includes(`<html lang="${l}"`)) err(`${f}: <html lang="${l}"> expected`);
+  for (const o of LANGS) if (!html.includes(`hreflang="${o}"`)) err(`${f}: no hreflang link to ${o}`);
+}
 
 // ---- tour pages + sitemap ----------------------------------------------------------------------
 const sitemap = read('sitemap.xml');

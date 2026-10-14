@@ -191,3 +191,20 @@ test.describe('reduced motion', () => {
     expect(await page.locator('#herovideo').evaluate((v) => v.paused)).toBe(true);
   });
 });
+
+for (const lang of LANGS) {
+  test(`privacy policy in ${lang}: own page, linked from the landing page in that language`, async ({ page }) => {
+    const w = watch(page);
+    await page.goto('/');
+    await page.selectOption('#lang', lang);
+    const href = lang === 'en' ? '/privacy.html' : `/privacy-${lang}.html`;
+    await expect(page.locator('a.privacylink').first()).toHaveAttribute('href', href);
+    const res = await page.goto(href);
+    expect(res.status()).toBe(200);
+    await expect(page.locator('html')).toHaveAttribute('lang', lang);
+    await expect(page.locator('h1')).toBeVisible();
+    await expect(page.locator('nav.langs a')).toHaveCount(5);   // the other five languages
+    expect(w.problems).toEqual([]);
+  });
+}
+
