@@ -12,7 +12,7 @@ import vm from 'node:vm';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const LANGS = ['en', 'de', 'fr', 'es', 'it', 'ru'];
-const PAGES = ['index.html', 'privacy.html', 'impressum.html',
+const PAGES = ['index.html', 'privacy.html', 'impressum.html', 'support.html',
   ...fs.readdirSync(path.join(ROOT, 't')).map((s) => `t/${s}/index.html`)];
 const BUDGET = { '.mp4': 3e6, '.jpg': 9e5, '.png': 9e5, '.webp': 2.5e5, '.mp3': 2e6, '.html': 1.5e5 };
 const errors = [], warnings = [];
