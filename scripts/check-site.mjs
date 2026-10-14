@@ -14,7 +14,7 @@ const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..')
 const LANGS = ['en', 'de', 'fr', 'es', 'it', 'ru'];
 const PAGES = ['index.html', 'privacy.html', 'impressum.html',
   ...fs.readdirSync(path.join(ROOT, 't')).map((s) => `t/${s}/index.html`)];
-const BUDGET = { '.mp4': 3e6, '.jpg': 9e5, '.png': 9e5, '.mp3': 2e6, '.html': 1.5e5 };
+const BUDGET = { '.mp4': 3e6, '.jpg': 9e5, '.png': 9e5, '.webp': 2.5e5, '.mp3': 2e6, '.html': 1.5e5 };
 const errors = [], warnings = [];
 const err = (m) => errors.push(m), warn = (m) => warnings.push(m);
 const read = (f) => fs.readFileSync(path.join(ROOT, f), 'utf8');
@@ -51,11 +51,11 @@ else {
 
 // ---- localized assets -------------------------------------------------------------------------
 for (const base of new Set([...index.matchAll(/data-base="([^"]+)"/g)].map((m) => m[1])))
-  for (const l of LANGS) if (!exists(`img/${base}_${l}.jpg`)) err(`img/${base}_${l}.jpg missing (localized screenshot)`);
+  for (const l of LANGS) if (!exists(`img/${base}_${l}.webp`)) err(`img/${base}_${l}.webp missing (localized screenshot; scripts/build-media.py)`);
 if (index.includes('id="herovideo"'))
   for (const l of LANGS) {
-    if (!exists(`video/hero_${l}.mp4`)) err(`video/hero_${l}.mp4 missing (hero loop)`);
-    if (!exists(`img/hero_poster_${l}.jpg`)) err(`img/hero_poster_${l}.jpg missing (hero poster)`);
+    for (const f of [`video/hero_${l}.mp4`, `video/hero_${l}_s.mp4`, `img/hero_poster_${l}.webp`])
+      if (!exists(f)) err(`${f} missing (hero loop: desktop, phone, poster; scripts/build-media.py)`);
   }
 const slugs = [...new Set([...index.matchAll(/class="card"[^>]*data-slug="([^"]+)"/g)].map((m) => m[1]))];
 if (!slugs.length) err('index.html: no tour cards found');

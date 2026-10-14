@@ -42,13 +42,14 @@ for (const lang of LANGS) {
     await expect(page.locator('h1')).toHaveText(h1);
 
     const video = page.locator('#herovideo');
-    await expect(video).toHaveAttribute('src', `video/hero_${lang}.mp4`);
-    await expect(video).toHaveAttribute('poster', `img/hero_poster_${lang}.jpg`);
+    const size = (page.viewportSize()?.width ?? 1280) <= 720 ? '_s' : '';   // phones get the 400 px loop
+    await expect(video).toHaveAttribute('src', `video/hero_${lang}${size}.mp4`);
+    await expect(video).toHaveAttribute('poster', `img/hero_poster_${lang}.webp`);
     await expect.poll(() => video.evaluate((v) => !v.error && v.readyState >= 2 && v.currentTime > 0),
       { message: 'hero loop plays' }).toBe(true);
 
     for (const img of await page.locator('img.locimg').all()) {
-      await expect(img).toHaveAttribute('src', new RegExp(`_${lang}\\.jpg$`));
+      await expect(img).toHaveAttribute('src', new RegExp(`_${lang}\\.webp$`));
       await img.scrollIntoViewIfNeeded();           // loading="lazy": fetched only near the viewport
       await expect.poll(() => img.evaluate((i) => i.complete && i.naturalWidth > 0)).toBe(true);
     }
