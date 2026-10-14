@@ -42,8 +42,9 @@ PROMPT = """You are reviewing pull request #{number} "{title}" in {repo}.
 PR description:
 {body}
 
-The unified diff follows on stdin. Review only what the diff changes. Be concrete and brief, skip praise and
-style nits. Reply with ONLY a JSON object, no prose around it:
+The unified diff follows on stdin. Review only what the diff changes. You see only the diff: code it relies on may
+already exist elsewhere in the repo, so never report something as missing just because the diff does not show it;
+report only what the changed lines themselves get wrong. Be concrete and brief, skip praise and style nits. Reply with ONLY a JSON object, no prose around it:
 {{"summary": "<markdown: 1-6 bullet findings ordered by severity, or one line saying nothing is wrong>",
   "verdict": "approve" | "request changes",
   "comments": [{{"path": "<file path as in the diff>", "line": <line number in the NEW file, on a changed or

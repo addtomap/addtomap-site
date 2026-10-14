@@ -26,6 +26,8 @@ jobs:
             --accept 200,206,429,999
             --exclude '^addtomap://' --exclude '^mailto:' --exclude 'addtomap\.co'
             index.html privacy.html impressum.html 't/*/index.html'
+          format: markdown
+          output: lychee/out.md   # the issue body below
           fail: false
       - name: Open or update an issue when links are broken
         if: steps.lychee.outputs.exit_code != 0
