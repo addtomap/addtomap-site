@@ -1,0 +1,17 @@
+{
+  "name": "addtomap-site",
+  "private": true,
+  "description": "addtomap.co — static marketing site for the AddToMap app (GitHub Pages)",
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/check-site.mjs",
+    "lint:html": "html-validate index.html privacy.html impressum.html \"t/*/index.html\"",
+    "test:e2e": "playwright test",
+    "test": "npm run check && npm run lint:html && npm run test:e2e",
+    "serve": "python3 -m http.server 4173"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.0",
+    "html-validate": "11.16.2"
+  }
+}

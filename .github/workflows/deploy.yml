@@ -1,0 +1,71 @@
+# Continuous deployment: every push to main (= every merged PR) is published to GitHub Pages.
+# main only receives commits through pull requests whose "static" and "e2e" checks passed
+# (branch protection), so what deploys has been tested. The build stamp is applied here, so nobody
+# has to run ./stamp.sh by hand any more; returning visitors auto-refresh when it changes.
+# Needs Settings → Pages → Source = "GitHub Actions".
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: https://addtomap.co/
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Stamp the build
+        id: stamp
+        run: |
+          ./stamp.sh
+          echo "build=$(cat version.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Assemble the site (no repo tooling in the published files)
+        run: |
+          rsync -a --delete \
+            --exclude '.git' --exclude '.github' --exclude '.gitignore' --exclude 'node_modules' \
+            --exclude 'tests' --exclude 'scripts' --exclude 'package.json' --exclude 'package-lock.json' \
+            --exclude 'playwright.config.mjs' --exclude '.htmlvalidate.json' --exclude 'lighthouserc.json' \
+            --exclude 'stamp.sh' --exclude 'README.md' --exclude 'CONTRIBUTING.md' --exclude '_site' \
+            ./ _site/
+          touch _site/.nojekyll
+          echo "Publishing $(find _site -type f | wc -l) files, $(du -sh _site | cut -f1)"
+
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v5
+
+      - name: Smoke test the live site
+        env:
+          BUILD: ${{ steps.stamp.outputs.build }}
+        run: |
+          for i in $(seq 1 30); do   # the Pages CDN can take a few minutes to pick up the new files
+            live="$(curl -fsS "https://addtomap.co/version.txt?run=$GITHUB_RUN_ID-$i" || true)"
+            [ "$live" = "$BUILD" ] && break
+            sleep 20
+          done
+          [ "$live" = "$BUILD" ] || { echo "::error::addtomap.co still serves build '$live', expected $BUILD"; exit 1; }
+          for path in / /privacy.html /impressum.html /t/rome-ancient/ /video/hero_en.mp4 /audio/rome-ancient_preview_en_f.mp3; do
+            code="$(curl -s -o /dev/null -w '%{http_code}' "https://addtomap.co$path?run=$GITHUB_RUN_ID")"
+            echo "$code $path"; [ "$code" = 200 ] || { echo "::error::$path returned $code"; exit 1; }
+          done
+          echo "### Deployed build $BUILD to https://addtomap.co" >> "$GITHUB_STEP_SUMMARY"

@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <title>AddToMap — Offline Audio Walking Tours</title>
 <meta name="description" content="Self-guided offline audio walking tours. Pick a city, follow the route on the map, and hear its stories as you walk. Free tours to start, more cities as one-time purchases, no subscription.">
 <meta property="og:title" content="AddToMap — Offline Audio Walking Tours">
@@ -35,6 +37,7 @@
   .badge{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;padding:12px 22px;border-radius:14px;font-weight:700}
   .badge small{display:block;font-size:11px;font-weight:600;opacity:.8;line-height:1}
   .note{color:var(--muted);font-size:13px;margin-top:12px}
+  .soft{background:var(--soft)}
   .herophones{position:relative;width:300px;margin:52px auto 0}
   .hp{border-radius:30px;border:1px solid #00000010;box-shadow:0 24px 60px #00000026;background:#fff}
   .hp-c{position:relative;display:block;width:100%;z-index:3}
@@ -113,7 +116,8 @@
   <div class="note" data-i18n="note">iPhone · works offline · 6 languages</div>
   <div class="herophones">
     <img class="hp hp-side hp-l locimg" data-base="screen-tour" src="img/screen-tour_en.jpg" alt="AddToMap — Barcelona tour overview" loading="lazy">
-    <video class="hp hp-c" id="herovideo" src="video/hero_en.mp4" poster="img/hero_poster_en.jpg" autoplay muted loop playsinline preload="auto" aria-label="AddToMap app: pick a tour, follow the map, and the story starts when you arrive"></video>
+    <!-- [html-validate-disable-next no-autoplay -- muted decorative loop] -->
+    <video class="hp hp-c" id="herovideo" src="video/hero_en.mp4" poster="img/hero_poster_en.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
     <img class="hp hp-side hp-r locimg" data-base="screen-photo" src="img/screen-photo_en.jpg" alt="AddToMap — story and photo at every stop" loading="lazy">
   </div>
 </div></div>
@@ -124,22 +128,22 @@
   <div class="voicebar">
     <span class="vlab" data-i18n="voice_label">Guide voice:</span>
     <span class="voicetoggle">
-      <button id="vf" class="on" onclick="setVoice('f')" data-i18n="voice_female">Female</button>
-      <button id="vm" onclick="setVoice('m')" data-i18n="voice_male">Male</button>
+      <button type="button" id="vf" class="on" onclick="setVoice('f')" data-i18n="voice_female">Female</button>
+      <button type="button" id="vm" onclick="setVoice('m')" data-i18n="voice_male">Male</button>
     </span>
   </div>
   <div class="tours">
-    <div class="card" id="tour-frankfurt" data-slug="frankfurt"><img src="img/frankfurt.jpg" alt="Frankfurt"><div class="b"><h3><a href="/t/frankfurt/">Frankfurt: Old Town Secrets</a></h3><div class="meta">5.6 km · 15 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free" data-i18n="free_badge">FREE</span><button class="pvbtn" data-slug="frankfurt" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
-    <div class="card" id="tour-venice-serene-republic" data-slug="venice-serene-republic"><img src="img/venice.jpg" alt="Venice"><div class="b"><h3><a href="/t/venice-serene-republic/">Venice: Doges & the Rialto</a></h3><div class="meta">2.9 km · 14 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free" data-i18n="free_badge">FREE</span><button class="pvbtn" data-slug="venice-serene-republic" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
-    <div class="card" id="tour-barcelona-gothic-quarter-el-born" data-slug="barcelona-gothic-quarter-el-born"><img src="img/barcelona.jpg" alt="Barcelona"><div class="b"><h3><a href="/t/barcelona-gothic-quarter-el-born/">Barcelona: Gothic Secrets</a></h3><div class="meta">4.1 km · 15 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free" data-i18n="free_badge">FREE</span><button class="pvbtn" data-slug="barcelona-gothic-quarter-el-born" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
+    <div class="card" id="tour-frankfurt" data-slug="frankfurt"><img src="img/frankfurt.jpg" alt="Frankfurt"><div class="b"><h3><a href="/t/frankfurt/">Frankfurt: Old Town Secrets</a></h3><div class="meta">5.6 km · 15 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free" data-i18n="free_badge">FREE</span><button type="button" class="pvbtn" data-slug="frankfurt" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
+    <div class="card" id="tour-venice-serene-republic" data-slug="venice-serene-republic"><img src="img/venice.jpg" alt="Venice"><div class="b"><h3><a href="/t/venice-serene-republic/">Venice: Doges &amp; the Rialto</a></h3><div class="meta">2.9 km · 14 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free" data-i18n="free_badge">FREE</span><button type="button" class="pvbtn" data-slug="venice-serene-republic" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
+    <div class="card" id="tour-barcelona-gothic-quarter-el-born" data-slug="barcelona-gothic-quarter-el-born"><img src="img/barcelona.jpg" alt="Barcelona"><div class="b"><h3><a href="/t/barcelona-gothic-quarter-el-born/">Barcelona: Gothic Secrets</a></h3><div class="meta">4.1 km · 15 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free" data-i18n="free_badge">FREE</span><button type="button" class="pvbtn" data-slug="barcelona-gothic-quarter-el-born" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
   </div>
   <h2 class="paidh" data-i18n="paid_title">More cities, 4,99 € each</h2>
   <p class="sub" data-i18n="paid_sub">One-time purchase, yours for good.</p>
   <div class="tours">
-    <div class="card" id="tour-rome-ancient" data-slug="rome-ancient"><img src="img/rome-ancient.jpg" alt="Rome"><div class="b"><h3><a href="/t/rome-ancient/">Rome: Emperors & Gladiators</a></h3><div class="meta">2.6 km · 8 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">4,99 €</span><button class="pvbtn" data-slug="rome-ancient" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
-    <div class="card" id="tour-rome-baroque" data-slug="rome-baroque"><img src="img/rome-baroque.jpg" alt="Rome"><div class="b"><h3><a href="/t/rome-baroque/">Rome: Pantheon, Navona & Trevi</a></h3><div class="meta">3.7 km · 8 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">4,99 €</span><button class="pvbtn" data-slug="rome-baroque" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
-    <div class="card" id="tour-paris-cite-saint-germain" data-slug="paris-cite-saint-germain"><img src="img/paris-cite.jpg" alt="Paris"><div class="b"><h3><a href="/t/paris-cite-saint-germain/">Paris: Notre-Dame & Saint-Germain</a></h3><div class="meta">3.3 km · 7 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">4,99 €</span><button class="pvbtn" data-slug="paris-cite-saint-germain" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
-    <div class="card" id="tour-paris-louvre-champs-elysees" data-slug="paris-louvre-champs-elysees"><img src="img/paris-louvre.jpg" alt="Paris"><div class="b"><h3><a href="/t/paris-louvre-champs-elysees/">Paris: Louvre to Champs-Élysées</a></h3><div class="meta">3.9 km · 7 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">4,99 €</span><button class="pvbtn" data-slug="paris-louvre-champs-elysees" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
+    <div class="card" id="tour-rome-ancient" data-slug="rome-ancient"><img src="img/rome-ancient.jpg" alt="Rome"><div class="b"><h3><a href="/t/rome-ancient/">Rome: Emperors &amp; Gladiators</a></h3><div class="meta">2.6 km · 8 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">4,99 €</span><button type="button" class="pvbtn" data-slug="rome-ancient" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
+    <div class="card" id="tour-rome-baroque" data-slug="rome-baroque"><img src="img/rome-baroque.jpg" alt="Rome"><div class="b"><h3><a href="/t/rome-baroque/">Rome: Pantheon, Navona &amp; Trevi</a></h3><div class="meta">3.7 km · 8 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">4,99 €</span><button type="button" class="pvbtn" data-slug="rome-baroque" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
+    <div class="card" id="tour-paris-cite-saint-germain" data-slug="paris-cite-saint-germain"><img src="img/paris-cite.jpg" alt="Paris"><div class="b"><h3><a href="/t/paris-cite-saint-germain/">Paris: Notre-Dame &amp; Saint-Germain</a></h3><div class="meta">3.3 km · 7 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">4,99 €</span><button type="button" class="pvbtn" data-slug="paris-cite-saint-germain" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
+    <div class="card" id="tour-paris-louvre-champs-elysees" data-slug="paris-louvre-champs-elysees"><img src="img/paris-louvre.jpg" alt="Paris"><div class="b"><h3><a href="/t/paris-louvre-champs-elysees/">Paris: Louvre to Champs-Élysées</a></h3><div class="meta">3.9 km · 7 <span data-i18n="stops">stops</span></div><div class="cardfoot"><span class="free paid">4,99 €</span><button type="button" class="pvbtn" data-slug="paris-louvre-champs-elysees" onclick="togglePreview(this)"><span class="ic">▶</span><span class="lbl" data-i18n="preview_play">Preview</span></button></div></div></div>
   </div>
 </div></section>
 
@@ -148,13 +152,13 @@
   <p class="sub" data-i18n="screens_sub">A quick look inside the app — browse tours, follow the map, and listen as you walk.</p>
 </div>
 <div class="gallery">
-  <figure><img class="locimg" data-base="screen-tour" src="img/screen-tour_en.jpg" alt="AddToMap — tour overview with route and stops" loading="lazy"><figcaption data-i18n="cap_tour">Preview & start</figcaption></figure>
+  <figure><img class="locimg" data-base="screen-tour" src="img/screen-tour_en.jpg" alt="AddToMap — tour overview with route and stops" loading="lazy"><figcaption data-i18n="cap_tour">Preview &amp; start</figcaption></figure>
   <figure><img class="locimg" data-base="screen-map" src="img/screen-map_en.jpg" alt="AddToMap — follow the map and listen to each stop" loading="lazy"><figcaption data-i18n="cap_map">Follow the map</figcaption></figure>
   <figure><img class="locimg" data-base="screen-photo" src="img/screen-photo_en.jpg" alt="AddToMap — photo and story at every stop" loading="lazy"><figcaption data-i18n="cap_photo">Stories at every stop</figcaption></figure>
 </div>
 </section>
 
-<section id="why" style="background:var(--soft)"><div class="wrap">
+<section id="why" class="soft"><div class="wrap">
   <h2 data-i18n="why_title">Why AddToMap</h2>
   <div class="feat">
     <div><div class="ic">💡</div><h3 data-i18n="f1_t">Stories &amp; secrets</h3><p data-i18n="f1_d">Fascinating history and local secrets at every stop — curated, not generic.</p></div>
