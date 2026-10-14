@@ -75,13 +75,26 @@ test('tour preview plays in the chosen voice and stops on a second tap', async (
   await male;
 });
 
-test('every tour card opens a working tour page', async ({ page }) => {
+test('every tour card leads to its tour: desktop and Android go straight to the card on the main page', async ({ page }) => {
   await page.goto('/');
   const hrefs = await page.locator('.card h3 a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
   expect(hrefs.length).toBe(7);
   for (const href of hrefs) {
-    const w = watch(page);
+    const slug = href.replace(/^\/t\/|\/$/g, '');
     const res = await page.goto(href);
+    expect(res.status(), href).toBe(200);
+    // /t/<slug> is the link shared from the app; without an iPhone there is nothing to open, so it redirects.
+    await expect(page).toHaveURL(new RegExp(`/\\?tour=${slug}$`));
+    await expect(page.locator(`#tour-${slug}`)).toBeVisible();
+  }
+});
+
+test('every tour landing page itself renders (#stay skips the hand-off): cover box, og:image, no errors', async ({ page }) => {
+  await page.goto('/');
+  const hrefs = await page.locator('.card h3 a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+  for (const href of hrefs) {
+    const w = watch(page);
+    const res = await page.goto(href + '#stay');
     expect(res.status(), href).toBe(200);
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /^https:\/\/addtomap\.co\/img\//);
@@ -93,6 +106,26 @@ test('every tour card opens a working tour page', async ({ page }) => {
     await expect.poll(() => cover.evaluate((i) => i.complete && i.naturalWidth > 0), { message: `${href} cover` }).toBe(true);
     expect(w.problems, href).toEqual([]);
   }
+});
+
+test.describe('shared tour link on an iPhone', () => {
+  test.use({ userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1' });
+  test('offers the app first, then falls back to the tour card', async ({ page, request }) => {
+    // The DOM is checked from the raw HTML: in a browser the page hands off to addtomap:// at once and Chrome,
+    // which cannot open that scheme, lands on the fallback before any assertion could run.
+    const res = await request.get('/t/frankfurt/');
+    expect(res.status()).toBe(200);
+    const html = await res.text();
+    expect(html).toMatch(/<h1[^>]*>[^<]*Frankfurt/);
+    expect(html).toContain('id="open" href="addtomap://tour/frankfurt"');
+    expect(html).toMatch(/property="og:image" content="https:\/\/addtomap\.co\/img\//);
+    expect(html).toMatch(/if\(\/iPhone\|iPad\|iPod\/\.test\(navigator\.userAgent\)\)/);
+    expect(html).toContain('location.replace("/?tour="+slug)');
+    // In the browser: no app → the 1.5 s fallback brings the tour card up.
+    await page.goto('/t/frankfurt/', { waitUntil: 'commit' }).catch(() => {});
+    await expect(page).toHaveURL(/\/\?tour=frankfurt$/, { timeout: 10000 });
+    await expect(page.locator('#tour-frankfurt')).toBeVisible();
+  });
 });
 
 test('legal pages load', async ({ page }) => {

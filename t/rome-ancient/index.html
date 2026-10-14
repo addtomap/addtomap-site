@@ -48,11 +48,15 @@
 <script>
 // Shared from the app: on an iPhone try the app first, then fall back to the tour card on the main page.
 (function(){
+  if(location.hash==="#stay") return;   // e2e + "stay on this page": no hand-off, no redirect
   var slug="rome-ancient";
   if(/iPhone|iPad|iPod/.test(navigator.userAgent)){
     var t=setTimeout(function(){ location.replace("/?tour="+slug); },1500);
     window.addEventListener("pagehide",function(){ clearTimeout(t); });
     location.href="addtomap://tour/"+slug;
+  } else {
+    // No app on this device (desktop, Android): the "open in the app" page makes no sense → straight to the tour.
+    location.replace("/?tour="+slug);
   }
 })();
 </script>
