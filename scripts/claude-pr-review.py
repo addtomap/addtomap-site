@@ -99,17 +99,28 @@ def review(repo, pr, dry_run):
     # not the variables of a Claude Code session this may be started from. No tools, no MCP servers, a short
     # system prompt: the review only reads the diff, and each call costs cents instead of a full agent setup.
     env = {"HOME": str(pathlib.Path.home()), "PATH": os.environ.get("PATH", "/usr/local/bin:/usr/bin:/bin")}
-    r = subprocess.run(["claude", "-p", prompt, "--output-format", "json", "--tools", "", "--strict-mcp-config",
-                        "--system-prompt", "You are a meticulous senior reviewer of pull requests. Answer with JSON only."],
-                       input=diff[:MAX_DIFF], capture_output=True, text=True, timeout=900, env=env)
-    out = r.stdout
-    if r.returncode or json.loads(out or "{}").get("is_error", True):
-        raise RuntimeError(f"claude failed: {(out or r.stderr)[:400]}")
-    text = json.loads(out).get("result", "")
-    m = re.search(r"\{[\s\S]*\}", text)
-    if not m:
-        raise RuntimeError(f"no JSON in Claude's answer: {text[:300]}")
-    res = json.loads(m.group(0))
+    res, last = None, ""
+    for attempt in range(2):   # the model occasionally wraps or breaks the JSON; one retry fixes that
+        r = subprocess.run(["claude", "-p", prompt, "--output-format", "json", "--tools", "", "--strict-mcp-config",
+                            "--system-prompt", "You are a meticulous senior reviewer of pull requests. Answer with JSON only."],
+                           input=diff[:MAX_DIFF], capture_output=True, text=True, timeout=900, env=env)
+        try:
+            outer = json.loads(r.stdout or "{}")
+        except json.JSONDecodeError:
+            outer = {"is_error": True, "result": r.stdout}
+        last = outer.get("result") or r.stderr
+        if r.returncode or outer.get("is_error", True):
+            continue
+        m = re.search(r"\{[\s\S]*\}", last)
+        try:
+            res = json.loads(m.group(0)) if m else None
+        except json.JSONDecodeError:
+            res = None
+        if isinstance(res, dict) and "summary" in res:
+            break
+        res = None
+    if res is None:
+        raise RuntimeError(f"no usable JSON from Claude: {last[:300]}")
 
     allowed = commentable_lines(diff)
     inline, loose = [], []
@@ -160,6 +171,11 @@ def main():
                     state[key] = pr["headRefOid"]; state_file.write_text(json.dumps(state, indent=1))
             except Exception as e:
                 print(f"{time.strftime('%F %T')} {key}: {e}", file=sys.stderr)
+                if not a.dry_run:   # never leave the head stuck at "pending"; the next run (1 min) retries
+                    try:
+                        set_status(repo, pr["headRefOid"], "error", f"Claude review failed, retrying: {e}")
+                    except Exception as e2:
+                        print(f"{time.strftime('%F %T')} {key}: status not set: {e2}", file=sys.stderr)
 
 
 if __name__ == "__main__":
