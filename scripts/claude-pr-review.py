@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""claude-pr-review.py — Claude Code review of open PRs, run on the owner's Mac (launchd, every 5 min).
+"""claude-pr-review.py — Claude Code review of open PRs, run on the owner's Mac (launchd, every minute).
 
 Same strategy as the insta travel bot: no Anthropic API key in GitHub; the local `claude` CLI talks
 to Claude through the proxy configured in ~/.claude/settings.json, so reviews happen while this Mac
@@ -18,6 +18,7 @@ import argparse, fcntl, json, os, pathlib, re, subprocess, sys, time
 REPOS = ["addtomap/addtomap-site"]
 STATE_DIR = pathlib.Path.home() / ".local/state/addtomap-pr-review"
 MAX_DIFF = 180_000            # characters of diff sent to the model
+MAX_TRIES = 5                 # failed reviews per head commit before giving up
 GUIDE = {
     "addtomap/addtomap-site": """addtomap.co is the static marketing site of AddToMap (iOS app of offline audio walking tours),
 plain HTML/CSS/vanilla JS on GitHub Pages: index.html (landing, inline CSS/JS, I18N table for en/de/fr/es/it/ru),
@@ -76,7 +77,19 @@ def commentable_lines(diff):
     return lines
 
 
+def set_status(repo, sha, state, description, url=None):
+    """Commit status "claude-review" on the PR head: pending while Claude reads, then success (approve) or
+    failure (request changes). Not a required check — a Mac that is off must not block merges."""
+    args = ["gh", "api", f"repos/{repo}/statuses/{sha}", "-X", "POST", "-f", f"state={state}",
+            "-f", "context=claude-review", "-f", f"description={description[:140]}"]
+    if url:
+        args += ["-f", f"target_url={url}"]
+    sh(*args)
+
+
 def review(repo, pr, dry_run):
+    if not dry_run:
+        set_status(repo, pr["headRefOid"], "pending", "Claude is reviewing this commit")
     diff = sh("gh", "pr", "diff", str(pr["number"]), "--repo", repo, timeout=120)
     truncated = len(diff) > MAX_DIFF
     prompt = PROMPT.format(number=pr["number"], title=pr["title"], repo=repo, guide=GUIDE.get(repo, ""),
@@ -87,17 +100,28 @@ def review(repo, pr, dry_run):
     # not the variables of a Claude Code session this may be started from. No tools, no MCP servers, a short
     # system prompt: the review only reads the diff, and each call costs cents instead of a full agent setup.
     env = {"HOME": str(pathlib.Path.home()), "PATH": os.environ.get("PATH", "/usr/local/bin:/usr/bin:/bin")}
-    r = subprocess.run(["claude", "-p", prompt, "--output-format", "json", "--tools", "", "--strict-mcp-config",
-                        "--system-prompt", "You are a meticulous senior reviewer of pull requests. Answer with JSON only."],
-                       input=diff[:MAX_DIFF], capture_output=True, text=True, timeout=900, env=env)
-    out = r.stdout
-    if r.returncode or json.loads(out or "{}").get("is_error", True):
-        raise RuntimeError(f"claude failed: {(out or r.stderr)[:400]}")
-    text = json.loads(out).get("result", "")
-    m = re.search(r"\{[\s\S]*\}", text)
-    if not m:
-        raise RuntimeError(f"no JSON in Claude's answer: {text[:300]}")
-    res = json.loads(m.group(0))
+    res, last = None, ""
+    for attempt in range(2):   # the model occasionally wraps or breaks the JSON; one retry fixes that
+        r = subprocess.run(["claude", "-p", prompt, "--output-format", "json", "--tools", "", "--strict-mcp-config",
+                            "--system-prompt", "You are a meticulous senior reviewer of pull requests. Answer with JSON only."],
+                           input=diff[:MAX_DIFF], capture_output=True, text=True, timeout=900, env=env)
+        try:
+            outer = json.loads(r.stdout or "{}")
+        except json.JSONDecodeError:
+            outer = {"is_error": True, "result": r.stdout}
+        last = outer.get("result") or r.stderr
+        if r.returncode or outer.get("is_error", True):
+            continue
+        m = re.search(r"\{[\s\S]*\}", last)
+        try:
+            res = json.loads(m.group(0)) if m else None
+        except json.JSONDecodeError:
+            res = None
+        if isinstance(res, dict) and "summary" in res:
+            break
+        res = None
+    if res is None:
+        raise RuntimeError(f"no usable JSON from Claude: {last[:300]}")
 
     allowed = commentable_lines(diff)
     inline, loose = [], []
@@ -114,8 +138,10 @@ def review(repo, pr, dry_run):
     payload = {"commit_id": pr["headRefOid"], "event": "COMMENT", "body": body, "comments": inline}
     if dry_run:
         print(json.dumps(payload, indent=1, ensure_ascii=False)); return
-    sh("gh", "api", f"repos/{repo}/pulls/{pr['number']}/reviews", "-X", "POST", "--input", "-",
-       input=json.dumps(payload))
+    posted = json.loads(sh("gh", "api", f"repos/{repo}/pulls/{pr['number']}/reviews", "-X", "POST", "--input", "-",
+                           input=json.dumps(payload)))
+    set_status(repo, pr["headRefOid"], "success" if verdict == "approve" else "failure",
+               f"Claude: {verdict}, {len(inline)} inline comment(s)", posted.get("html_url"))
     print(f"{repo}#{pr['number']} {pr['headRefOid'][:7]}: {verdict}, {len(inline)} inline comment(s)")
 
 
@@ -140,12 +166,23 @@ def main():
                 continue
             if not a.pr and (pr["isDraft"] or pr["isCrossRepository"] or state.get(key) == pr["headRefOid"]):
                 continue
+            fails = state.get(f"{key}:fails", {})
+            if not a.pr and fails.get("sha") == pr["headRefOid"] and fails.get("n", 0) >= MAX_TRIES:
+                continue   # gave up on this commit; a new push (or --pr) tries again
             try:
                 review(repo, pr, a.dry_run)
                 if not a.dry_run:
                     state[key] = pr["headRefOid"]; state_file.write_text(json.dumps(state, indent=1))
             except Exception as e:
                 print(f"{time.strftime('%F %T')} {key}: {e}", file=sys.stderr)
+                if not a.dry_run:   # never leave the head stuck at "pending"; retried next minute, MAX_TRIES per commit
+                    n = fails.get("n", 0) + 1 if fails.get("sha") == pr["headRefOid"] else 1
+                    state[f"{key}:fails"] = {"sha": pr["headRefOid"], "n": n}; state_file.write_text(json.dumps(state, indent=1))
+                    try:
+                        set_status(repo, pr["headRefOid"], "error",
+                                   f"Claude review failed ({n}/{MAX_TRIES}){', retrying' if n < MAX_TRIES else ', gave up'}: {e}")
+                    except Exception as e2:
+                        print(f"{time.strftime('%F %T')} {key}: status not set: {e2}", file=sys.stderr)
 
 
 if __name__ == "__main__":
