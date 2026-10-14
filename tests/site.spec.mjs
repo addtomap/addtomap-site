@@ -42,15 +42,14 @@ for (const lang of LANGS) {
     await expect(page.locator('h1')).toHaveText(h1);
 
     const video = page.locator('#herovideo');
-    const size = (page.viewportSize()?.width ?? 1280) <= 720 ? '_s' : '';   // phones get the 400 px loop
     const build = await page.locator('meta[name="build"]').getAttribute('content');   // every localized media URL carries it: img/ and video/ are browser-cached for 4 h
-    await expect(video).toHaveAttribute('src', `video/hero_${lang}${size}.mp4?v=${build}`);
-    await expect(video).toHaveAttribute('poster', `img/hero_poster_${lang}.webp?v=${build}`);
+    await expect(video).toHaveAttribute('src', `video/hero_${lang}.mp4?v=${build}`);
+    await expect(video).toHaveAttribute('poster', `img/hero_poster_${lang}.jpg?v=${build}`);
     await expect.poll(() => video.evaluate((v) => !v.error && v.readyState >= 2 && v.currentTime > 0),
       { message: 'hero loop plays' }).toBe(true);
 
     for (const img of await page.locator('img.locimg').all()) {
-      await expect(img).toHaveAttribute('src', new RegExp(`_${lang}\\.webp\\?v=${build}$`));
+      await expect(img).toHaveAttribute('src', new RegExp(`_${lang}\\.jpg\\?v=${build}$`));
       await img.scrollIntoViewIfNeeded();           // loading="lazy": fetched only near the viewport
       await expect.poll(() => img.evaluate((i) => i.complete && i.naturalWidth > 0)).toBe(true);
     }
@@ -87,6 +86,25 @@ test('every tour card leads to its tour: desktop and Android go straight to the 
     // /t/<slug> is the link shared from the app; without an iPhone there is nothing to open, so it redirects.
     await expect(page).toHaveURL(new RegExp(`/\\?tour=${slug}$`));
     await expect(page.locator(`#tour-${slug}`)).toBeVisible();
+  }
+});
+
+test('every tour landing page itself renders (#stay skips the hand-off): cover box, og:image, no errors', async ({ page }) => {
+  await page.goto('/');
+  const hrefs = await page.locator('.card h3 a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+  for (const href of hrefs) {
+    const w = watch(page);
+    const res = await page.goto(href + '#stay');
+    expect(res.status(), href).toBe(200);
+    await expect(page.locator('h1')).toBeVisible();
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /^https:\/\/addtomap\.co\/img\//);
+    const cover = page.locator('img.cover');
+    await cover.scrollIntoViewIfNeeded();
+    // the width/height attributes must not override the 3:2 box (height:auto in the CSS)
+    const ratio = await cover.evaluate((i) => i.clientWidth / i.clientHeight);
+    expect(ratio, `${href} cover box`).toBeCloseTo(1.5, 1);
+    await expect.poll(() => cover.evaluate((i) => i.complete && i.naturalWidth > 0), { message: `${href} cover` }).toBe(true);
+    expect(w.problems, href).toEqual([]);
   }
 });
 

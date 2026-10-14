@@ -27,7 +27,7 @@
   .wrap{max-width:560px;margin:0 auto;padding:28px 20px 48px;text-align:center}
   .brand{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:18px;margin-bottom:18px}
   .brand img{width:28px;height:28px} .brand b{color:var(--o)}
-  img.cover{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:18px;box-shadow:0 14px 40px #0002}
+  img.cover{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:18px;box-shadow:0 14px 40px #0002}
   h1{font-size:26px;line-height:1.2;margin:18px 0 8px}
   p{color:var(--muted);margin-bottom:22px}
   .btn{display:block;background:var(--o);color:#fff;font-weight:700;font-size:17px;padding:15px 18px;border-radius:14px;text-decoration:none;margin-bottom:10px}
@@ -38,7 +38,7 @@
 <body>
 <div class="wrap">
   <a class="brand" href="/"><img src="/img/logo.png" alt="">AddTo<b>Map</b></a>
-  <img class="cover" src="/img/paris-cite_cover.webp" width="945" height="630" fetchpriority="high" alt="Paris: Notre-Dame & Saint-Germain">
+  <img class="cover" src="/img/paris-cite.jpg" width="1200" height="630" fetchpriority="high" alt="Paris: Notre-Dame & Saint-Germain">
   <h1>Paris: Notre-Dame &amp; Saint-Germain</h1>
   <p>7 stops, 3 km, about an hour and a quarter. Notre-Dame, Sainte-Chapelle, the Pont Neuf, the cafés of Saint-Germain and the Pont des Arts. One-time purchase, 4,99 €.</p>
   <a class="btn" id="open" href="addtomap://tour/paris-cite-saint-germain">Open in the AddToMap app</a>
@@ -48,6 +48,7 @@
 <script>
 // Shared from the app: on an iPhone try the app first, then fall back to the tour card on the main page.
 (function(){
+  if(location.hash==="#stay") return;   // e2e + "stay on this page": no hand-off, no redirect
   var slug="paris-cite-saint-germain";
   if(/iPhone|iPad|iPod/.test(navigator.userAgent)){
     var t=setTimeout(function(){ location.replace("/?tour="+slug); },1500);
