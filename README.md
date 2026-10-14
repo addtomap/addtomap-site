@@ -13,6 +13,23 @@ Pages from this repo with the custom domain in `CNAME`.
 | `audio/<slug>_preview_<lang>[_f].mp3` | Tour previews, male / female (`_f`) voice; `background_music.mp3` |
 | `sitemap.xml`, `robots.txt`, `version.txt` | SEO; `version.txt` + `<meta name="build">` make returning visitors refresh |
 
+## Hosting
+
+```
+visitor → Cloudflare (addtomap.co proxied: edge cache, HTTP/3, Brotli) → GitHub Pages (origin)
+```
+
+- DNS lives in Cloudflare. The four `A` records of `addtomap.co` (185.199.108–111.153, GitHub Pages) are
+  **proxied**; `www` is a DNS-only CNAME that GitHub redirects to the apex; MX/TXT are for e-mail routing.
+- SSL/TLS mode must stay **Full** (not *Flexible*: redirect loop with GitHub's enforced HTTPS; not
+  *Full (strict)*: GitHub may not renew its origin certificate while the domain is proxied).
+- Images, video and audio are cached at the edge (`cf-cache-status: HIT`, 10 min from GitHub's
+  `max-age=600`); HTML and `version.txt` always come from GitHub, so a deploy is live within a minute.
+  Bandwidth served from Cloudflare's cache does not count against GitHub Pages' 100 GB/month soft limit.
+- Rollback: Cloudflare → DNS → set the four `A` records to *DNS only*.
+- Media are kept light by `scripts/build-media.py` (WebP cards/screenshots/posters/covers, 400 px hero
+  loop for phones; the JPEG covers stay for og:image).
+
 ## Working on the site
 
 ```bash
