@@ -270,10 +270,12 @@ function setLang(l){
   });
   var m=MAIL[l]||MAIL.en, mh="mailto:support@addtomap.co?subject="+encodeURIComponent(m.s)+"&body="+encodeURIComponent(m.b);
   document.querySelectorAll("a.supportmail").forEach(function(a){ a.href=mh; });
+  // per-deploy cache-buster: img/ and video/ are browser-cached for 4 h, the build stamp changes on every deploy
+  var V="?v="+((document.querySelector('meta[name="build"]')||{getAttribute:function(){return "0"}}).getAttribute("content"));
   document.querySelectorAll("img.locimg").forEach(function(img){
     var base=img.getAttribute("data-base");
-    img.onerror=function(){ img.onerror=null; img.src="img/"+base+"_en.webp"; };  // fall back to English
-    img.src="img/"+base+"_"+l+".webp";
+    img.onerror=function(){ img.onerror=null; img.src="img/"+base+"_en.webp"+V; };  // fall back to English
+    img.src="img/"+base+"_"+l+".webp"+V;
   });
   var hv=document.getElementById("herovideo");  // hero loop recorded in each UI language; honour reduced motion
   if(hv){
@@ -281,8 +283,8 @@ function setLang(l){
         size=(window.matchMedia && matchMedia("(max-width: 720px)").matches) ? "_s" : "", want="video/hero_"+l+size+".mp4";
     if(still){ hv.removeAttribute("autoplay"); hv.pause(); }
     if(hv.getAttribute("src")!==want){
-      hv.onerror=function(){ hv.onerror=null; hv.poster="img/hero_poster_en.webp"; hv.src="video/hero_en"+size+".mp4"; if(!still) hv.play().catch(function(){}); };
-      hv.poster="img/hero_poster_"+l+".webp"; hv.src=want; hv.load();
+      hv.onerror=function(){ hv.onerror=null; hv.poster="img/hero_poster_en.webp"+V; hv.src="video/hero_en"+size+".mp4"+V; if(!still) hv.play().catch(function(){}); };
+      hv.poster="img/hero_poster_"+l+".webp"+V; hv.src=want+V; hv.load();
       if(!still) hv.play().catch(function(){});
     }
   }

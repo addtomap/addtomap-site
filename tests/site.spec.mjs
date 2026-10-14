@@ -43,13 +43,14 @@ for (const lang of LANGS) {
 
     const video = page.locator('#herovideo');
     const size = (page.viewportSize()?.width ?? 1280) <= 720 ? '_s' : '';   // phones get the 400 px loop
-    await expect(video).toHaveAttribute('src', `video/hero_${lang}${size}.mp4`);
-    await expect(video).toHaveAttribute('poster', `img/hero_poster_${lang}.webp`);
+    const build = await page.locator('meta[name="build"]').getAttribute('content');   // every localized media URL carries it: img/ and video/ are browser-cached for 4 h
+    await expect(video).toHaveAttribute('src', `video/hero_${lang}${size}.mp4?v=${build}`);
+    await expect(video).toHaveAttribute('poster', `img/hero_poster_${lang}.webp?v=${build}`);
     await expect.poll(() => video.evaluate((v) => !v.error && v.readyState >= 2 && v.currentTime > 0),
       { message: 'hero loop plays' }).toBe(true);
 
     for (const img of await page.locator('img.locimg').all()) {
-      await expect(img).toHaveAttribute('src', new RegExp(`_${lang}\\.webp$`));
+      await expect(img).toHaveAttribute('src', new RegExp(`_${lang}\\.webp\\?v=${build}$`));
       await img.scrollIntoViewIfNeeded();           // loading="lazy": fetched only near the viewport
       await expect.poll(() => img.evaluate((i) => i.complete && i.naturalWidth > 0)).toBe(true);
     }
