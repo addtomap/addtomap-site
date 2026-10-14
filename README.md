@@ -27,8 +27,8 @@ visitor → Cloudflare (addtomap.co proxied: edge cache, HTTP/3, Brotli) → Git
   `max-age=600`); HTML and `version.txt` always come from GitHub, so a deploy is live within a minute.
   Bandwidth served from Cloudflare's cache does not count against GitHub Pages' 100 GB/month soft limit.
 - Rollback: Cloudflare → DNS → set the four `A` records to *DNS only*.
-- Media are kept light by `scripts/build-media.py` (WebP cards/screenshots/posters/covers, 400 px hero
-  loop for phones; the JPEG covers stay for og:image).
+- Media are served as approved, never recompressed for size (owner's rule: quality is not traded for
+  bytes). Size is kept down by lazy loading below the fold and the Cloudflare edge cache, not by re-encoding.
 
 ## Working on the site
 
