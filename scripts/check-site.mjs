@@ -82,6 +82,15 @@ for (const s of slugs) {
   const og = html.match(/property="og:image" content="https:\/\/addtomap\.co\/([^"]+)"/);
   if (og && !exists(og[1])) err(`${page}: og:image ${og[1]} does not exist`);
   if (!locs.includes(`t/${s}/`)) err(`sitemap.xml: /t/${s}/ missing`);
+  // the price on the card is the price of the tour page (packs/all-cities cost more than a single tour)
+  const card = index.match(new RegExp(`data-slug="${s}"[\\s\\S]*?class="free paid">([0-9]+,[0-9]{2}) €`));
+  if (card) {
+    const single = Number(card[1].replace(',', '.'));
+    for (const [, p] of html.matchAll(/([0-9]+,[0-9]{2}) €/g)) {
+      const v = Number(p.replace(',', '.'));
+      if (v < single * 1.4 && v !== single) err(`${page}: price ${p} € ≠ the card's ${card[1]} € on the landing page`);
+    }
+  }
 }
 
 // ---- build stamp, domain, sizes, secrets -------------------------------------------------------
@@ -98,6 +107,7 @@ const walk = (dir) => fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true
 });
 for (const f of walk('.')) {
   const ext = path.extname(f).toLowerCase(), size = fs.statSync(path.join(ROOT, f)).size;
+  // nuville/: a file hosted here on purpose for a direct link; not part of the site, exempt from the budgets
   if (BUDGET[ext] && size > BUDGET[ext] && !f.startsWith('nuville/'))
     err(`${f}: ${(size / 1e6).toFixed(2)} MB over the ${(BUDGET[ext] / 1e6).toFixed(1)} MB budget for ${ext}`);
   if (['.html', '.js', '.mjs', '.json', '.md', '.txt', '.xml', '.yml', '.yaml', '.sh', '.css'].includes(ext) && size < 2e6) {
