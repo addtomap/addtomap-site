@@ -128,6 +128,61 @@ test.describe('shared tour link on an iPhone', () => {
   });
 });
 
+// Audit 15 Oct: the Impressum must be reachable from every page ("unmittelbar erreichbar", §5 DDG) — on phones the
+// header menu is hidden, so the footer carries it. Runs in the desktop and the mobile (Pixel 7) project.
+const ALL_PAGES = ['/', '/support.html', '/impressum.html', '/privacy.html', '/privacy-de.html', '/privacy-fr.html',
+  '/privacy-es.html', '/privacy-it.html', '/privacy-ru.html',
+  ...['frankfurt', 'venice-serene-republic', 'barcelona-gothic-quarter-el-born', 'rome-ancient', 'rome-baroque',
+      'paris-cite-saint-germain', 'paris-louvre-champs-elysees'].map((s) => `/t/${s}/#stay`)];
+test('every page links the Impressum and the support page in its footer, visible on this screen size', async ({ page }) => {
+  for (const url of ALL_PAGES) {
+    await page.goto(url);
+    const impressum = page.locator('footer a[href="/impressum.html"]');
+    const support = page.locator('footer a[href="/support.html"]');
+    await impressum.scrollIntoViewIfNeeded();
+    await expect(impressum, `${url}: Impressum in the footer`).toBeVisible();
+    await expect(support, `${url}: Support in the footer`).toBeVisible();
+  }
+  await page.goto('/');
+  await page.locator('footer a[href="/impressum.html"]').click();
+  await expect(page).toHaveURL(/\/impressum\.html$/);
+  await expect(page.locator('h1')).toBeVisible();
+});
+
+test('the header "Support" link opens the support page, not a mail draft', async ({ page }) => {
+  await page.goto('/');
+  for (const a of await page.locator('a[data-i18n="nav_support"]').all()) {
+    expect(await a.getAttribute('href')).toBe('/support.html');
+  }
+});
+
+test('a shared tour page tries the app only once: the home page does not try addtomap:// again', async ({ request }) => {
+  // On an iPhone without the app Safari shows "address is invalid" for every attempt; the /t/ page marks its try.
+  for (const slug of ['frankfurt', 'venice-serene-republic', 'barcelona-gothic-quarter-el-born', 'rome-ancient',
+                      'rome-baroque', 'paris-cite-saint-germain', 'paris-louvre-champs-elysees']) {
+    const html = await (await request.get(`/t/${slug}/`)).text();
+    const mark = html.indexOf('sessionStorage.setItem("appTried_"+slug,"1")');
+    const handoff = html.indexOf('location.href="addtomap://tour/"+slug');
+    expect(mark, `${slug}: marks the app attempt`).toBeGreaterThan(0);
+    expect(mark, `${slug}: before handing off`).toBeLessThan(handoff);
+  }
+  const home = await (await request.get('/')).text();
+  expect(home).toContain('!sessionStorage.getItem("appTried_"+slug)');
+});
+
+test('the Impressum e-mail is readable without JavaScript (excluded from Cloudflare e-mail obfuscation)', async ({ request }) => {
+  for (const url of ['/impressum.html', '/support.html']) {
+    const html = await (await request.get(url)).text();
+    expect(html, url).toMatch(/<!--email_off-->[^]*?support@addtomap\.co[^]*?<!--\/email_off-->/);
+  }
+});
+
+test('private files are not part of the site', async ({ request }) => {
+  // 15 Oct: a personal video was served from addtomap.co/nuville/. Nothing outside the site may be published.
+  expect((await request.get('/nuville/g27-dusche-gefaelle-88cfc4253593.mp4')).status()).toBe(404);
+  expect((await request.get('/nuville/')).status()).toBe(404);
+});
+
 test('legal pages load', async ({ page }) => {
   for (const p of ['/privacy.html', '/impressum.html']) {
     const res = await page.goto(p);

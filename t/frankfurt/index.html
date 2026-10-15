@@ -33,6 +33,7 @@
   .btn{display:block;background:var(--o);color:#fff;font-weight:700;font-size:17px;padding:15px 18px;border-radius:14px;text-decoration:none;margin-bottom:10px}
   .btn.sec{background:#faf6f1;color:var(--ink)}
   small{display:block;color:var(--muted);margin-top:14px;font-size:13px}
+footer.legal{max-width:720px;margin:40px auto 24px;padding:0 20px;font-size:14px;text-align:center}
 </style>
 </head>
 <body>
@@ -51,6 +52,7 @@
   if(location.hash==="#stay") return;   // e2e + "stay on this page": no hand-off, no redirect
   var slug="frankfurt";
   if(/iPhone|iPad|iPod/.test(navigator.userAgent)){
+    try{ sessionStorage.setItem("appTried_"+slug,"1"); }catch(e){}   // the home page must not try the app again
     var t=setTimeout(function(){ location.replace("/?tour="+slug); },1500);
     window.addEventListener("pagehide",function(){ clearTimeout(t); });
     location.href="addtomap://tour/"+slug;
@@ -60,5 +62,6 @@
   }
 })();
 </script>
+<footer class="legal"><a href="/">AddToMap</a> · <a href="/support.html">Support</a> · <a href="/privacy.html">Privacy</a> · <a href="/impressum.html">Impressum</a></footer>
 </body>
 </html>
