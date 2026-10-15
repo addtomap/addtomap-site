@@ -116,8 +116,7 @@ const walk = (dir) => fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true
 });
 for (const f of walk('.')) {
   const ext = path.extname(f).toLowerCase(), size = fs.statSync(path.join(ROOT, f)).size;
-  // nuville/: a file hosted here on purpose for a direct link; not part of the site, exempt from the budgets
-  if (BUDGET[ext] && size > BUDGET[ext] && !f.startsWith('nuville/'))
+  if (BUDGET[ext] && size > BUDGET[ext])
     err(`${f}: ${(size / 1e6).toFixed(2)} MB over the ${(BUDGET[ext] / 1e6).toFixed(1)} MB budget for ${ext}`);
   if (['.html', '.js', '.mjs', '.json', '.md', '.txt', '.xml', '.yml', '.yaml', '.sh', '.css'].includes(ext) && size < 2e6) {
     const hit = read(f).match(SECRET);
