@@ -278,11 +278,20 @@ for (const lang of LANGS) {
     expect(text).toContain('tiles.openfreemap.org');
     expect(text).toContain('Firebase Crashlytics');
     await expect(page.locator('h2')).toHaveCount(13);
-    // Apple and Telegram sit in the second list (other recipients), not among the processors.
-    const lists = page.locator('h2:nth-of-type(9) ~ ul');
-    await expect(lists.first()).not.toContainText('Apple');
-    await expect(lists.first()).not.toContainText('Telegram');
-    await expect(lists.nth(1)).toContainText('Apple');
+    // Section 9: the first list after the heading is the processors, the second the other recipients.
+    const section = page.locator('h2').nth(8);
+    const processors = section.locator('xpath=following-sibling::ul[1]');
+    const recipients = section.locator('xpath=following-sibling::ul[2]');
+    await expect(processors).toContainText('Google Firebase');
+    await expect(processors).toContainText('Cloudflare');
+    await expect(processors).not.toContainText('Apple');
+    await expect(processors).not.toContainText('Telegram');
+    await expect(recipients).toContainText('Apple');
+    await expect(recipients).toContainText('Telegram');
+    await expect(recipients).toContainText('OpenFreeMap');
+    // Both lists belong to section 9: the next heading comes after them.
+    const next = await page.locator('h2').nth(9).evaluate((h) => h.previousElementSibling.previousElementSibling.tagName);
+    expect(next).toBe('UL');
   });
 }
 
