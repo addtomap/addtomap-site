@@ -33,7 +33,7 @@ footer.legal{max-width:720px;margin:40px auto 24px;padding:0 20px;font-size:14px
 <a class="logo" href="/">AddTo<span>Map</span></a>
 <nav class="langs" aria-label="Language"><strong>English</strong><a href="/privacy-de.html" hreflang="de" lang="de">Deutsch</a><a href="/privacy-fr.html" hreflang="fr" lang="fr">Français</a><a href="/privacy-es.html" hreflang="es" lang="es">Español</a><a href="/privacy-it.html" hreflang="it" lang="it">Italiano</a><a href="/privacy-ru.html" hreflang="ru" lang="ru">Русский</a></nav>
 <h1>Privacy Policy</h1>
-<p class="muted">Last updated: 14 October 2026</p>
+<p class="muted">Last updated: 15 October 2026</p>
 
 <p>AddToMap ("we", "the app") provides offline, self-guided audio walking tours.
 We built the app to need as little of your data as possible. This policy explains
@@ -51,23 +51,25 @@ what we do and don't collect.</p>
 </ul>
 
 <h2>Location</h2>
-<p>With your permission, the app uses your location <strong>on your device</strong>
-to show where you are on the map and guide you along a tour route. Your location
-is <strong>not sent to us or stored on our servers</strong>. You can use tours in a
-preview mode without location, and you can revoke the permission anytime in iOS
+<p>With your permission (“While Using the App”), the app uses your location <strong>on your device</strong>
+to show where you are on the map, guide you along a tour route and start a stop's story when you arrive —
+also with the screen locked while a tour's map is open. Your location is <strong>not sent to us or stored on
+our servers</strong>. You can use the tours without location, and you can revoke the permission anytime in iOS
 Settings.</p>
 
-<h2>Anonymous diagnostics</h2>
-<p>To fix bugs and understand which features are used, the app collects
-<strong>anonymous</strong> analytics and crash reports via <strong>Google
-Firebase (Analytics without advertising identifiers, and Crashlytics)</strong>.
-This includes app events (e.g. a tour was opened), crash/error information, device
-model, OS version, app version and coarse region — tied only to a random install
-identifier, <strong>not to your identity</strong>. It is used solely to improve the
-app, never for advertising or tracking.</p>
-<p>Legal basis: Art. 6(1)(f) GDPR — our legitimate interest in a stable app and in knowing which
-features are used. Retention: crash reports are kept for 90 days; analytics events for at most
-14 months (Google's retention setting), then deleted automatically.</p>
+<h2>Usage statistics and crash reports</h2>
+<p><strong>Usage statistics — only with your consent.</strong> On the last page of the first start, and at any
+time in Settings → Share usage statistics, the app asks whether you want to share usage statistics. Only if you
+agree does it send app events via <strong>Google Firebase Analytics</strong> (without advertising identifiers):
+for example that a tour was opened, downloaded or finished, that the purchase screen was shown, and the outcome
+of a purchase or a restore (product and result — never payment details), together with device model, iOS and app
+version and coarse region. The events are tied to a random install identifier, not to your name: this is
+<strong>pseudonymous</strong> data. You can withdraw your consent at any time in Settings; collection stops at once.</p>
+<p><strong>Crash reports.</strong> To fix bugs, the app sends crash and error information with device model, iOS
+and app version and a random identifier via <strong>Firebase Crashlytics</strong>.</p>
+<p>Legal basis: usage statistics — your consent, Art. 6(1)(a) GDPR; crash reports — Art. 6(1)(f) GDPR, our
+legitimate interest in an app that works. Retention: crash reports 90 days; analytics events at most 14 months
+(Google's retention setting), then deleted automatically. Neither is used for advertising or tracking.</p>
 
 <h2>Ratings and feedback</h2>
 <p>After a tour the app may ask you to rate it from 1 to 5 stars. Ratings are stored
@@ -75,18 +77,19 @@ features are used. Retention: crash reports are kept for 90 days; analytics even
 Firestore — nothing in them identifies you. If you choose to tell us what could be better, that text
 (with the rating, the tour, the app language and version — no identifier) is stored in Firestore and
 forwarded to us through a Cloudflare Worker to a Telegram chat so we can read it quickly. It is never
-shown in the app or published; please don't include personal data in it. With 4–5 stars the app shows
-Apple's standard App Store review prompt, which is handled entirely by Apple.</p>
+shown in the app or published; please don't include personal data in it. After you rate a tour, whatever
+the stars, iOS may show Apple's standard App Store review prompt, which is handled entirely by Apple.</p>
 <p>Legal basis: Art. 6(1)(f) GDPR (improving the tours) and, for the text you choose to send, your
 decision to send it. Ratings are kept as counters while the tour is offered; feedback texts are deleted
 once they have been read and acted on.</p>
 
-<h2>Tour content delivery</h2>
+<h2>Tour content and maps</h2>
 <p>Tour files (audio, text, images) are downloaded from our content delivery
-network (<code>cdn.addtomap.co</code>, served via Cloudflare). Standard technical
-request data (such as IP address) may be processed by Cloudflare to deliver the
-files and protect the service; we do not use it to identify you. Legal basis: Art. 6(1)(b) GDPR — delivering the tours you asked
-for — and Art. 6(1)(f) GDPR for security.</p>
+network (<code>cdn.addtomap.co</code>, served via Cloudflare). The maps show OpenStreetMap data loaded from
+<strong>OpenFreeMap</strong> (<code>tiles.openfreemap.org</code>); the map of a tour's area is stored on your
+phone for offline use. Both servers process standard technical request data (such as IP address) to deliver
+the files and protect the service; we do not use it to identify you. Legal basis: Art. 6(1)(b) GDPR —
+delivering the tours you asked for — and Art. 6(1)(f) GDPR for security.</p>
 
 <h2>This website</h2>
 <p>addtomap.co is hosted on GitHub Pages and delivered through Cloudflare. When you open it, the
@@ -97,15 +100,21 @@ browser's local storage only on your device. Legal basis: Art. 6(1)(f) GDPR.</p>
 
 <h2>Purchases</h2>
 <p>Paid tours are bought through the App Store. Apple processes the payment as the seller; we never
-receive your payment details or your Apple ID — the app only learns which tours are unlocked.</p>
+receive your payment details or your Apple ID — the app only learns which tours are unlocked. If you agreed
+to usage statistics, the app also records that a purchase was started and its result (see above).</p>
 
-<h2>Processors</h2>
+<h2>Processors and other recipients</h2>
+<p>Processors working on our behalf:</p>
 <ul>
-  <li><strong>Google Firebase</strong> (Analytics / Crashlytics / Firestore) — diagnostics, anonymous tour counters and feedback.</li>
+  <li><strong>Google Firebase</strong> (Analytics / Crashlytics / Firestore) — usage statistics (with consent), crash reports, anonymous tour counters and feedback.</li>
   <li><strong>Cloudflare</strong> — content delivery, security and the feedback relay (Workers).</li>
-  <li><strong>Telegram</strong> — delivery of the feedback you choose to send, to the developer's chat.</li>
-  <li><strong>Apple</strong> — app distribution and, for paid tours, payment (Apple is the seller of record).</li>
   <li><strong>GitHub</strong> — hosting of this website.</li>
+</ul>
+<p>Other recipients, each responsible for its own processing:</p>
+<ul>
+  <li><strong>Apple</strong> — app distribution and, for paid tours, payment (Apple is the seller of record and an independent controller).</li>
+  <li><strong>Telegram</strong> — delivery of the feedback you choose to send, to the developer's chat.</li>
+  <li><strong>OpenFreeMap</strong> — map tiles (see “Tour content and maps”).</li>
 </ul>
 <p>Google, Cloudflare and GitHub may process data in the USA; they are certified under the EU–US Data
 Privacy Framework (adequacy decision of the European Commission, Art. 45 GDPR). Feedback relayed to
@@ -114,8 +123,10 @@ Telegram may be processed outside the EU — please do not include personal data
 <h2>Your rights (GDPR)</h2>
 <p>You have the right to access (Art. 15), rectification (Art. 16), erasure (Art. 17), restriction of
 processing (Art. 18), data portability (Art. 20) and to object to processing based on legitimate
-interests (Art. 21). As the data is anonymous we generally cannot link it to you; you can stop all
-diagnostics by deleting the app, and you control location in iOS Settings. Write to us for any request.</p>
+interests (Art. 21). You can withdraw your consent to usage statistics at any time in Settings, without
+affecting what was processed before (Art. 7(3)). As the data is pseudonymous we generally cannot link it to
+you; you can stop all diagnostics by deleting the app, and you control location in iOS Settings. Write to us
+for any request.</p>
 <p>You also have the right to lodge a complaint with a supervisory authority (Art. 77 GDPR), for example
 in your country of residence. The authority responsible for us is the Hessian Commissioner for Data
 Protection and Freedom of Information (HBDI), Gustav-Stresemann-Ring 1, 65189 Wiesbaden, Germany.</p>

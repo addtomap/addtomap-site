@@ -263,3 +263,35 @@ for (const lang of LANGS) {
   });
 }
 
+// What app build 9 does must be what the policy says (audit 15 Oct): statistics only with consent (Art. 6(1)(a),
+// pseudonymous), the review prompt after any rating, OpenFreeMap for the maps, Apple and Telegram as recipients
+// rather than our processors.
+const CONSENT_BASIS = { en: '6(1)(a)', de: 'Art. 6 Abs. 1 lit. a', fr: 'point a)', es: 'letra a)', it: 'lett. a)', ru: '6(1)(a)' };
+const PSEUDONYMOUS = { en: 'pseudonymous', de: 'pseudonym', fr: 'pseudonymes', es: 'seudonimizados', it: 'pseudonimi', ru: 'псевдонимизированн' };
+for (const lang of LANGS) {
+  test(`privacy policy in ${lang} matches the app: consent, maps, recipients`, async ({ page }) => {
+    await page.goto(lang === 'en' ? '/privacy.html' : `/privacy-${lang}.html`);
+    const text = await page.locator('body').innerText();
+    expect(text).toContain(CONSENT_BASIS[lang]);
+    expect(text).toContain(PSEUDONYMOUS[lang]);
+    expect(text).toContain('OpenFreeMap');
+    expect(text).toContain('tiles.openfreemap.org');
+    expect(text).toContain('Firebase Crashlytics');
+    await expect(page.locator('h2')).toHaveCount(13);
+    // Section 9: the first list after the heading is the processors, the second the other recipients.
+    const section = page.locator('h2').nth(8);
+    const processors = section.locator('xpath=following-sibling::ul[1]');
+    const recipients = section.locator('xpath=following-sibling::ul[2]');
+    await expect(processors).toContainText('Google Firebase');
+    await expect(processors).toContainText('Cloudflare');
+    await expect(processors).not.toContainText('Apple');
+    await expect(processors).not.toContainText('Telegram');
+    await expect(recipients).toContainText('Apple');
+    await expect(recipients).toContainText('Telegram');
+    await expect(recipients).toContainText('OpenFreeMap');
+    // Both lists belong to section 9: the next heading comes after them.
+    const next = await page.locator('h2').nth(9).evaluate((h) => h.previousElementSibling.previousElementSibling.tagName);
+    expect(next).toBe('UL');
+  });
+}
+

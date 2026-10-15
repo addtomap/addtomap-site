@@ -33,7 +33,7 @@ footer.legal{max-width:720px;margin:40px auto 24px;padding:0 20px;font-size:14px
 <a class="logo" href="/">AddTo<span>Map</span></a>
 <nav class="langs" aria-label="Idioma"><a href="/privacy.html" hreflang="en" lang="en">English</a><a href="/privacy-de.html" hreflang="de" lang="de">Deutsch</a><a href="/privacy-fr.html" hreflang="fr" lang="fr">Français</a><strong>Español</strong><a href="/privacy-it.html" hreflang="it" lang="it">Italiano</a><a href="/privacy-ru.html" hreflang="ru" lang="ru">Русский</a></nav>
 <h1>Política de privacidad</h1>
-<p class="muted">Última actualización: 14 de octubre de 2026</p>
+<p class="muted">Última actualización: 15 de octubre de 2026</p>
 
 <p>AddToMap («nosotros», «la aplicación») ofrece tours de audio a pie, autoguiados y disponibles sin conexión.
 Hemos creado la aplicación para que necesite la menor cantidad posible de sus datos. Esta política explica qué
@@ -51,41 +51,47 @@ datos recopilamos y cuáles no.</p>
 </ul>
 
 <h2>Ubicación</h2>
-<p>Con su permiso, la aplicación utiliza su ubicación <strong>en su dispositivo</strong>
-para mostrarle dónde se encuentra en el mapa y guiarle a lo largo de la ruta de un tour. Su ubicación
-<strong>no se nos envía ni se almacena en nuestros servidores</strong>. Puede usar los tours en un modo de
-vista previa sin ubicación y puede revocar el permiso en cualquier momento en los Ajustes de iOS.</p>
+<p>Con su permiso («Al usar la app»), la aplicación usa su ubicación <strong>en su dispositivo</strong> para mostrar dónde
+está en el mapa, guiarle por la ruta e iniciar la historia de una parada cuando llega, también con la pantalla bloqueada
+mientras el mapa de un tour está abierto. Su ubicación <strong>no se nos envía ni se guarda en nuestros servidores</strong>.
+Puede usar los tours sin ubicación y retirar el permiso en cualquier momento en los Ajustes de iOS.</p>
 
-<h2>Diagnóstico anónimo</h2>
-<p>Para corregir errores y entender qué funciones se utilizan, la aplicación recopila datos analíticos e
-informes de fallos <strong>anónimos</strong> a través de <strong>Google
-Firebase (Analytics sin identificadores publicitarios, y Crashlytics)</strong>.
-Esto incluye eventos de la aplicación (p. ej., que se abrió un tour), información sobre fallos y errores, modelo
-del dispositivo, versión del sistema operativo, versión de la aplicación y región aproximada, vinculados únicamente
-a un identificador de instalación aleatorio, <strong>no a su identidad</strong>. Se utilizan exclusivamente para
-mejorar la aplicación, nunca para publicidad ni seguimiento.</p>
-<p>Base jurídica: art. 6, apartado 1, letra f) del RGPD — nuestro interés legítimo en una aplicación estable y en
-saber qué funciones se utilizan. Conservación: los informes de fallos se conservan durante 90 días; los eventos
-analíticos, como máximo 14 meses (configuración de conservación de Google), y después se eliminan automáticamente.</p>
+<h2>Estadísticas de uso e informes de fallos</h2>
+<p><strong>Estadísticas de uso, solo con su consentimiento.</strong> En la última página del primer inicio, y en cualquier
+momento en Ajustes → Compartir estadísticas de uso, la aplicación le pregunta si desea compartir estadísticas de uso. Solo si
+acepta envía eventos a través de <strong>Google Firebase Analytics</strong> (sin identificadores publicitarios): por ejemplo,
+que se abrió, descargó o terminó un tour, que se mostró la pantalla de compra y el resultado de una compra o de una
+restauración (producto y resultado, nunca datos de pago), junto con el modelo del dispositivo, las versiones de iOS y de la
+aplicación y la región aproximada. Los eventos se vinculan a un identificador de instalación aleatorio, no a su nombre: son
+datos <strong>seudonimizados</strong>. Puede retirar su consentimiento en cualquier momento en Ajustes; la recogida se
+detiene de inmediato.</p>
+<p><strong>Informes de fallos.</strong> Para corregir errores, la aplicación envía la información de fallos y errores con
+el modelo del dispositivo, las versiones de iOS y de la aplicación y un identificador aleatorio a través de
+<strong>Firebase Crashlytics</strong>.</p>
+<p>Base jurídica: estadísticas de uso — su consentimiento, art. 6, apartado 1, letra a) del RGPD; informes de fallos —
+art. 6, apartado 1, letra f) del RGPD, nuestro interés legítimo en una aplicación que funcione. Conservación: informes de
+fallos 90 días; eventos analíticos como máximo 14 meses (configuración de conservación de Google), y después se eliminan
+automáticamente. Ninguno de ellos se usa para publicidad ni seguimiento.</p>
 
 <h2>Valoraciones y comentarios</h2>
-<p>Después de un tour, la aplicación puede pedirle que lo valore de 1 a 5 estrellas. Las valoraciones se almacenan
-<strong>de forma anónima</strong> como un contador por tour (suma y número de valoraciones) en Google Firebase
-Firestore; nada en ellas le identifica. Si decide contarnos qué podría mejorar, ese texto (con la valoración, el
-tour, el idioma y la versión de la aplicación, sin ningún identificador) se almacena en Firestore y se nos reenvía a
-través de un Cloudflare Worker a un chat de Telegram para que podamos leerlo rápidamente. Nunca se muestra en la
-aplicación ni se publica; por favor, no incluya datos personales en él. Con 4–5 estrellas, la aplicación muestra la
-solicitud de valoración estándar de Apple para el App Store, que gestiona íntegramente Apple.</p>
-<p>Base jurídica: art. 6, apartado 1, letra f) del RGPD (mejora de los tours) y, para el texto que usted decida enviar,
-su decisión de enviarlo. Las valoraciones se conservan como contadores mientras se ofrezca el tour; los textos de los
-comentarios se eliminan una vez leídos y atendidos.</p>
+<p>Después de un tour, la aplicación puede pedirle que lo valore de 1 a 5 estrellas. Las valoraciones se guardan de forma
+<strong>anónima</strong> como un contador por tour (suma y número de valoraciones) en Google Firebase Firestore; nada en
+ellas le identifica. Si decide contarnos qué podría mejorar, ese texto (con la valoración, el tour, el idioma y la versión
+de la aplicación, sin identificador) se guarda en Firestore y se nos reenvía mediante un Cloudflare Worker a un chat de
+Telegram para que podamos leerlo rápidamente. Nunca se muestra en la aplicación ni se publica; por favor, no incluya datos
+personales en él. Después de valorar un tour, sea cual sea el número de estrellas, iOS puede mostrar la solicitud estándar
+de reseña del App Store, gestionada íntegramente por Apple.</p>
+<p>Base jurídica: art. 6, apartado 1, letra f) del RGPD (mejorar los tours) y, para el texto que decida enviar, su
+decisión de enviarlo. Las valoraciones se conservan como contadores mientras se ofrezca el tour; los comentarios se
+eliminan una vez leídos y atendidos.</p>
 
-<h2>Entrega del contenido de los tours</h2>
-<p>Los archivos de los tours (audio, texto, imágenes) se descargan desde nuestra red de distribución de contenidos
-(<code>cdn.addtomap.co</code>, servida a través de Cloudflare). Cloudflare puede tratar datos técnicos habituales de
-la solicitud (como la dirección IP) para entregar los archivos y proteger el servicio; nosotros no los utilizamos para
-identificarle. Base jurídica: art. 6, apartado 1, letra b) del RGPD — la entrega de los tours que usted ha solicitado —
-y art. 6, apartado 1, letra f) del RGPD para la seguridad.</p>
+<h2>Contenido de los tours y mapas</h2>
+<p>Los archivos de los tours (audio, texto, imágenes) se descargan de nuestra red de distribución de contenidos
+(<code>cdn.addtomap.co</code>, servida a través de Cloudflare). Los mapas muestran datos de OpenStreetMap cargados desde
+<strong>OpenFreeMap</strong> (<code>tiles.openfreemap.org</code>); el mapa de la zona de un tour se guarda en su teléfono
+para usarlo sin conexión. Ambos servidores tratan los datos técnicos habituales de la solicitud (como la dirección IP) para
+entregar los archivos y proteger el servicio; no los usamos para identificarle. Base jurídica: art. 6, apartado 1, letra b)
+del RGPD — ofrecer los tours que usted ha solicitado — y art. 6, apartado 1, letra f) del RGPD para la seguridad.</p>
 
 <h2>Este sitio web</h2>
 <p>addtomap.co está alojado en GitHub Pages y se sirve a través de Cloudflare. Cuando usted lo abre, los servidores
@@ -96,26 +102,34 @@ se guardan en el almacenamiento local de su navegador, solo en su dispositivo. B
 letra f) del RGPD.</p>
 
 <h2>Compras</h2>
-<p>Los tours de pago se compran a través del App Store. Apple procesa el pago como vendedor; nunca recibimos sus datos
-de pago ni su ID de Apple: la aplicación solo sabe qué tours están desbloqueados.</p>
+<p>Los tours de pago se compran a través del App Store. Apple procesa el pago como vendedor; nunca recibimos sus datos de
+pago ni su ID de Apple: la aplicación solo sabe qué tours están desbloqueados. Si aceptó las estadísticas de uso, la
+aplicación también registra que se inició una compra y su resultado (véase más arriba).</p>
 
-<h2>Encargados del tratamiento</h2>
+<h2>Encargados del tratamiento y otros destinatarios</h2>
+<p>Encargados que tratan datos por cuenta nuestra:</p>
 <ul>
-  <li><strong>Google Firebase</strong> (Analytics / Crashlytics / Firestore) — diagnóstico, contadores anónimos de los tours y comentarios.</li>
+  <li><strong>Google Firebase</strong> (Analytics / Crashlytics / Firestore) — estadísticas de uso (con consentimiento), informes de fallos, contadores anónimos de los tours y comentarios.</li>
   <li><strong>Cloudflare</strong> — distribución de contenidos, seguridad y reenvío de los comentarios (Workers).</li>
-  <li><strong>Telegram</strong> — entrega de los comentarios que usted decida enviar al chat del desarrollador.</li>
-  <li><strong>Apple</strong> — distribución de la aplicación y, para los tours de pago, el pago (Apple es el vendedor a efectos legales).</li>
   <li><strong>GitHub</strong> — alojamiento de este sitio web.</li>
+</ul>
+<p>Otros destinatarios, cada uno responsable de su propio tratamiento:</p>
+<ul>
+  <li><strong>Apple</strong> — distribución de la aplicación y, para los tours de pago, el pago (Apple es el vendedor y un responsable independiente).</li>
+  <li><strong>Telegram</strong> — entrega de los comentarios que usted decida enviar al chat del desarrollador.</li>
+  <li><strong>OpenFreeMap</strong> — teselas del mapa (véase «Contenido de los tours y mapas»).</li>
 </ul>
 <p>Google, Cloudflare y GitHub pueden tratar datos en EE. UU.; están certificados conforme al EU–US Data Privacy
 Framework (decisión de adecuación de la Comisión Europea, art. 45 del RGPD). Los comentarios reenviados a Telegram
 pueden tratarse fuera de la UE; por favor, no incluya datos personales en ellos.</p>
 
 <h2>Sus derechos (RGPD)</h2>
-<p>Usted tiene derecho de acceso (art. 15), rectificación (art. 16), supresión (art. 17), limitación del tratamiento
-(art. 18), portabilidad de los datos (art. 20) y oposición al tratamiento basado en intereses legítimos (art. 21).
-Como los datos son anónimos, por lo general no podemos vincularlos a usted; puede detener todo el diagnóstico
-eliminando la aplicación, y controla la ubicación en los Ajustes de iOS. Escríbanos para cualquier solicitud.</p>
+<p>Tiene derecho de acceso (art. 15), rectificación (art. 16), supresión (art. 17), limitación del tratamiento
+(art. 18), portabilidad de los datos (art. 20) y oposición al tratamiento basado en intereses legítimos (art. 21). Puede
+retirar en cualquier momento su consentimiento a las estadísticas de uso en Ajustes, sin que ello afecte al tratamiento
+anterior (art. 7, apartado 3). Como los datos están seudonimizados, en general no podemos vincularlos a usted; puede detener
+todo diagnóstico eliminando la aplicación, y controla la ubicación en los Ajustes de iOS. Escríbanos para cualquier
+solicitud.</p>
 <p>También tiene derecho a presentar una reclamación ante una autoridad de control (art. 77 del RGPD), por ejemplo en
 su país de residencia. La autoridad competente respecto de nosotros es el Comisionado de Hesse para la Protección de
 Datos y la Libertad de Información (HBDI), Gustav-Stresemann-Ring 1, 65189 Wiesbaden, Alemania.</p>

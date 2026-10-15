@@ -33,7 +33,7 @@ footer.legal{max-width:720px;margin:40px auto 24px;padding:0 20px;font-size:14px
 <a class="logo" href="/">AddTo<span>Map</span></a>
 <nav class="langs" aria-label="Sprache"><a href="/privacy.html" hreflang="en" lang="en">English</a><strong>Deutsch</strong><a href="/privacy-fr.html" hreflang="fr" lang="fr">Français</a><a href="/privacy-es.html" hreflang="es" lang="es">Español</a><a href="/privacy-it.html" hreflang="it" lang="it">Italiano</a><a href="/privacy-ru.html" hreflang="ru" lang="ru">Русский</a></nav>
 <h1>Datenschutzerklärung</h1>
-<p class="muted">Zuletzt aktualisiert: 14. Oktober 2026</p>
+<p class="muted">Zuletzt aktualisiert: 15. Oktober 2026</p>
 
 <p>AddToMap („wir“, „die App“) bietet offline nutzbare Audio-Rundgänge an, die Sie eigenständig
 zu Fuß unternehmen. Wir haben die App so gebaut, dass sie so wenige Ihrer Daten wie möglich benötigt.
@@ -51,43 +51,49 @@ Diese Datenschutzerklärung erläutert, welche Daten wir erheben und welche nich
 </ul>
 
 <h2>Standort</h2>
-<p>Mit Ihrer Erlaubnis verwendet die App Ihren Standort <strong>auf Ihrem Gerät</strong>,
-um Ihnen auf der Karte anzuzeigen, wo Sie sich befinden, und Sie entlang einer Tour-Route zu führen.
-Ihr Standort wird <strong>weder an uns gesendet noch auf unseren Servern gespeichert</strong>. Sie können
-Touren in einem Vorschaumodus ohne Standort nutzen und die Berechtigung jederzeit in den
-iOS-Einstellungen widerrufen.</p>
+<p>Mit Ihrer Erlaubnis („Beim Verwenden der App“) nutzt die App Ihren Standort <strong>auf Ihrem Gerät</strong>,
+um Ihre Position auf der Karte zu zeigen, Sie entlang der Route zu führen und die Geschichte einer Station zu starten,
+wenn Sie ankommen – auch bei gesperrtem Bildschirm, solange die Karte einer Tour geöffnet ist. Ihr Standort wird
+<strong>weder an uns gesendet noch auf unseren Servern gespeichert</strong>. Sie können die Touren auch ohne Standort
+nutzen und die Erlaubnis jederzeit in den iOS-Einstellungen widerrufen.</p>
 
-<h2>Anonyme Diagnosedaten</h2>
-<p>Um Fehler zu beheben und zu verstehen, welche Funktionen genutzt werden, erhebt die App
-<strong>anonyme</strong> Analysedaten und Absturzberichte über <strong>Google
-Firebase (Analytics ohne Werbe-IDs sowie Crashlytics)</strong>.
-Dazu gehören App-Ereignisse (z. B. dass eine Tour geöffnet wurde), Absturz- und Fehlerinformationen,
-Gerätemodell, Betriebssystemversion, App-Version und ungefähre Region – verknüpft nur mit einer zufälligen
-Installations-ID, <strong>nicht mit Ihrer Identität</strong>. Diese Daten werden ausschließlich zur
-Verbesserung der App verwendet, niemals für Werbung oder Tracking.</p>
-<p>Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO – unser berechtigtes Interesse an einer stabilen App und daran,
-zu wissen, welche Funktionen genutzt werden. Speicherdauer: Absturzberichte werden 90 Tage aufbewahrt,
-Analyseereignisse höchstens 14 Monate (Aufbewahrungseinstellung von Google); danach werden sie automatisch gelöscht.</p>
+<h2>Nutzungsstatistik und Absturzberichte</h2>
+<p><strong>Nutzungsstatistik – nur mit Ihrer Einwilligung.</strong> Auf der letzten Seite des ersten Starts und jederzeit
+unter Einstellungen → Nutzungsstatistik teilen fragt die App, ob Sie eine Nutzungsstatistik teilen möchten. Nur wenn Sie
+zustimmen, sendet sie App-Ereignisse über <strong>Google Firebase Analytics</strong> (ohne Werbe-IDs): zum Beispiel, dass
+eine Tour geöffnet, geladen oder beendet wurde, dass der Kaufbildschirm angezeigt wurde, und das Ergebnis eines Kaufs oder
+einer Wiederherstellung (Produkt und Ergebnis – niemals Zahlungsdaten), zusammen mit Gerätemodell, iOS- und App-Version
+und grober Region. Die Ereignisse sind mit einer zufälligen Installationskennung verknüpft, nicht mit Ihrem Namen: Es
+handelt sich um <strong>pseudonyme</strong> Daten. Sie können Ihre Einwilligung jederzeit in den Einstellungen widerrufen;
+die Erhebung endet sofort.</p>
+<p><strong>Absturzberichte.</strong> Um Fehler zu beheben, sendet die App Absturz- und Fehlerinformationen mit
+Gerätemodell, iOS- und App-Version und einer zufälligen Kennung über <strong>Firebase Crashlytics</strong>.</p>
+<p>Rechtsgrundlage: Nutzungsstatistik – Ihre Einwilligung, Art. 6 Abs. 1 lit. a DSGVO; Absturzberichte – Art. 6 Abs. 1
+lit. f DSGVO, unser berechtigtes Interesse an einer funktionierenden App. Speicherdauer: Absturzberichte 90 Tage,
+Analyseereignisse höchstens 14 Monate (Aufbewahrungseinstellung von Google); danach werden sie automatisch gelöscht.
+Beides wird weder für Werbung noch für Tracking verwendet.</p>
 
 <h2>Bewertungen und Feedback</h2>
 <p>Nach einer Tour kann die App Sie bitten, sie mit 1 bis 5 Sternen zu bewerten. Bewertungen werden
-<strong>anonym</strong> als Zähler pro Tour (Summe und Anzahl der Bewertungen) in Google Firebase
-Firestore gespeichert – nichts darin identifiziert Sie. Wenn Sie uns mitteilen möchten, was besser sein
-könnte, wird dieser Text (mit der Bewertung, der Tour, der App-Sprache und -Version – ohne Kennung) in
-Firestore gespeichert und über einen Cloudflare Worker in einen Telegram-Chat an uns weitergeleitet, damit wir
-ihn schnell lesen können. Er wird niemals in der App angezeigt oder veröffentlicht; bitte geben Sie darin keine
-personenbezogenen Daten an. Bei 4–5 Sternen zeigt die App die standardmäßige App-Store-Bewertungsabfrage von
-Apple an, die vollständig von Apple abgewickelt wird.</p>
-<p>Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (Verbesserung der Touren) und, für den Text, den Sie uns auf
-eigenen Wunsch senden, Ihre Entscheidung, ihn zu senden. Bewertungen werden als Zähler aufbewahrt, solange die
-Tour angeboten wird; Feedbacktexte werden gelöscht, sobald sie gelesen und bearbeitet wurden.</p>
+<strong>anonym</strong> als Zähler pro Tour (Summe und Anzahl der Bewertungen) in Google Firebase Firestore
+gespeichert – nichts darin identifiziert Sie. Wenn Sie uns mitteilen möchten, was besser sein könnte, wird dieser
+Text (mit der Bewertung, der Tour, der App-Sprache und -Version – ohne Kennung) in Firestore gespeichert und über einen
+Cloudflare Worker an einen Telegram-Chat weitergeleitet, damit wir ihn schnell lesen können. Er wird nie in der App
+angezeigt oder veröffentlicht; bitte geben Sie darin keine personenbezogenen Daten an. Nachdem Sie eine Tour bewertet
+haben – unabhängig von der Sternezahl –, kann iOS Apples Standard-Bewertungsdialog des App Store anzeigen, der
+vollständig von Apple abgewickelt wird.</p>
+<p>Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (Verbesserung der Touren) und, für den Text, den Sie senden, Ihre
+Entscheidung, ihn zu senden. Bewertungen werden als Zähler aufbewahrt, solange die Tour angeboten wird;
+Feedback-Texte werden gelöscht, sobald sie gelesen und bearbeitet wurden.</p>
 
-<h2>Bereitstellung der Tourinhalte</h2>
-<p>Tourdateien (Audio, Text, Bilder) werden aus unserem Content Delivery Network
-(<code>cdn.addtomap.co</code>, ausgeliefert über Cloudflare) heruntergeladen. Übliche technische
-Anfragedaten (z. B. die IP-Adresse) können von Cloudflare verarbeitet werden, um die Dateien auszuliefern
-und den Dienst zu schützen; wir nutzen sie nicht, um Sie zu identifizieren. Rechtsgrundlage: Art. 6 Abs. 1
-lit. b DSGVO – Bereitstellung der von Ihnen angeforderten Touren – und Art. 6 Abs. 1 lit. f DSGVO für die Sicherheit.</p>
+<h2>Tourinhalte und Karten</h2>
+<p>Tourdateien (Audio, Text, Bilder) werden aus unserem Content-Delivery-Netzwerk (<code>cdn.addtomap.co</code>,
+ausgeliefert über Cloudflare) geladen. Die Karten zeigen OpenStreetMap-Daten, die von <strong>OpenFreeMap</strong>
+(<code>tiles.openfreemap.org</code>) geladen werden; die Karte des Tourgebiets wird für die Offline-Nutzung auf Ihrem
+Handy gespeichert. Beide Server verarbeiten übliche technische Anfragedaten (etwa die IP-Adresse), um die Dateien
+auszuliefern und den Dienst zu schützen; wir nutzen sie nicht, um Sie zu identifizieren. Rechtsgrundlage: Art. 6
+Abs. 1 lit. b DSGVO – Bereitstellung der von Ihnen gewünschten Touren – und Art. 6 Abs. 1 lit. f DSGVO für die
+Sicherheit.</p>
 
 <h2>Diese Website</h2>
 <p>addtomap.co wird auf GitHub Pages gehostet und über Cloudflare ausgeliefert. Wenn Sie die Website aufrufen,
@@ -98,16 +104,22 @@ Stimme für die Hörproben werden nur im lokalen Speicher Ihres Browsers auf Ihr
 Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO.</p>
 
 <h2>Käufe</h2>
-<p>Kostenpflichtige Touren werden über den App Store gekauft. Apple wickelt die Zahlung als Verkäufer ab; wir
-erhalten niemals Ihre Zahlungsdaten oder Ihre Apple-ID – die App erfährt nur, welche Touren freigeschaltet sind.</p>
+<p>Kostenpflichtige Touren werden über den App Store gekauft. Apple wickelt die Zahlung als Verkäufer ab; wir erhalten
+weder Ihre Zahlungsdaten noch Ihre Apple-ID – die App erfährt nur, welche Touren freigeschaltet sind. Wenn Sie der
+Nutzungsstatistik zugestimmt haben, erfasst die App außerdem, dass ein Kauf begonnen wurde, und sein Ergebnis (siehe oben).</p>
 
-<h2>Auftragsverarbeiter</h2>
+<h2>Auftragsverarbeiter und weitere Empfänger</h2>
+<p>Auftragsverarbeiter, die in unserem Auftrag tätig sind:</p>
 <ul>
-  <li><strong>Google Firebase</strong> (Analytics / Crashlytics / Firestore) – Diagnose, anonyme Tour-Zähler und Feedback.</li>
+  <li><strong>Google Firebase</strong> (Analytics / Crashlytics / Firestore) – Nutzungsstatistik (mit Einwilligung), Absturzberichte, anonyme Tour-Zähler und Feedback.</li>
   <li><strong>Cloudflare</strong> – Bereitstellung von Inhalten, Sicherheit und Weiterleitung des Feedbacks (Workers).</li>
-  <li><strong>Telegram</strong> – Zustellung des Feedbacks, das Sie senden möchten, an den Chat des Entwicklers.</li>
-  <li><strong>Apple</strong> – Vertrieb der App und, bei kostenpflichtigen Touren, Zahlungsabwicklung (Apple ist im rechtlichen Sinne der Verkäufer).</li>
   <li><strong>GitHub</strong> – Hosting dieser Website.</li>
+</ul>
+<p>Weitere Empfänger, jeweils selbst für ihre Verarbeitung verantwortlich:</p>
+<ul>
+  <li><strong>Apple</strong> – Vertrieb der App und, bei kostenpflichtigen Touren, Zahlungsabwicklung (Apple ist der Verkäufer und eigenständiger Verantwortlicher).</li>
+  <li><strong>Telegram</strong> – Zustellung des Feedbacks, das Sie senden möchten, an den Chat des Entwicklers.</li>
+  <li><strong>OpenFreeMap</strong> – Kartenkacheln (siehe „Tourinhalte und Karten“).</li>
 </ul>
 <p>Google, Cloudflare und GitHub können Daten in den USA verarbeiten; sie sind nach dem EU–US Data
 Privacy Framework zertifiziert (Angemessenheitsbeschluss der Europäischen Kommission, Art. 45 DSGVO). An
@@ -116,10 +128,11 @@ personenbezogenen Daten an.</p>
 
 <h2>Ihre Rechte (DSGVO)</h2>
 <p>Sie haben das Recht auf Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der
-Verarbeitung (Art. 18) und Datenübertragbarkeit (Art. 20) sowie das Recht auf Widerspruch gegen eine Verarbeitung,
-die auf berechtigten Interessen beruht (Art. 21). Da die Daten anonym sind, können wir sie in der Regel nicht Ihrer
-Person zuordnen; Sie können sämtliche Diagnosen beenden, indem Sie die App löschen, und den Standortzugriff steuern
-Sie in den iOS-Einstellungen. Schreiben Sie uns bei jedem Anliegen.</p>
+Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und auf Widerspruch gegen eine Verarbeitung aufgrund berechtigter
+Interessen (Art. 21). Ihre Einwilligung zur Nutzungsstatistik können Sie jederzeit in den Einstellungen widerrufen; die
+bis dahin erfolgte Verarbeitung bleibt davon unberührt (Art. 7 Abs. 3). Da die Daten pseudonym sind, können wir sie Ihnen
+in der Regel nicht zuordnen; Sie können jede Diagnose beenden, indem Sie die App löschen, und den Standort steuern Sie in
+den iOS-Einstellungen. Schreiben Sie uns bei jedem Anliegen.</p>
 <p>Sie haben außerdem das Recht auf Beschwerde bei einer Aufsichtsbehörde (Art. 77 DSGVO), beispielsweise in
 Ihrem Wohnsitzland. Für uns zuständige Aufsichtsbehörde: Der Hessische Beauftragte für Datenschutz und
 Informationsfreiheit (HBDI), Gustav-Stresemann-Ring 1, 65189 Wiesbaden, Deutschland.</p>

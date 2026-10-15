@@ -33,7 +33,7 @@ footer.legal{max-width:720px;margin:40px auto 24px;padding:0 20px;font-size:14px
 <a class="logo" href="/">AddTo<span>Map</span></a>
 <nav class="langs" aria-label="Langue"><a href="/privacy.html" hreflang="en" lang="en">English</a><a href="/privacy-de.html" hreflang="de" lang="de">Deutsch</a><strong>Français</strong><a href="/privacy-es.html" hreflang="es" lang="es">Español</a><a href="/privacy-it.html" hreflang="it" lang="it">Italiano</a><a href="/privacy-ru.html" hreflang="ru" lang="ru">Русский</a></nav>
 <h1>Politique de confidentialité</h1>
-<p class="muted">Dernière mise à jour&nbsp;: 14 octobre 2026</p>
+<p class="muted">Dernière mise à jour&nbsp;: 15 octobre 2026</p>
 
 <p>AddToMap («&nbsp;nous&nbsp;», «&nbsp;l'application&nbsp;») propose des visites audio à pied, à faire en
 autonomie et utilisables hors ligne. Nous avons conçu l'application pour qu'elle ait besoin du moins possible
@@ -51,44 +51,51 @@ de vos données. La présente politique explique ce que nous collectons et ce qu
 </ul>
 
 <h2>Localisation</h2>
-<p>Avec votre autorisation, l'application utilise votre position <strong>sur votre appareil</strong>
-pour indiquer où vous vous trouvez sur la carte et vous guider le long de l'itinéraire d'une visite. Votre
-position <strong>ne nous est pas envoyée et n'est pas stockée sur nos serveurs</strong>. Vous pouvez utiliser
-les visites en mode aperçu sans localisation, et vous pouvez retirer l'autorisation à tout moment dans les
-Réglages d'iOS.</p>
+<p>Avec votre autorisation («&nbsp;Lorsque l'app est active&nbsp;»), l'application utilise votre position <strong>sur
+votre appareil</strong> pour vous situer sur la carte, vous guider le long de l'itinéraire et lancer l'histoire d'une étape
+à votre arrivée — y compris écran verrouillé tant que la carte d'une visite est ouverte. Votre position n'est
+<strong>ni envoyée à nous ni stockée sur nos serveurs</strong>. Vous pouvez utiliser les visites sans localisation et
+retirer l'autorisation à tout moment dans les Réglages d'iOS.</p>
 
-<h2>Diagnostics anonymes</h2>
-<p>Pour corriger les bugs et comprendre quelles fonctionnalités sont utilisées, l'application collecte
-des données d'analyse et des rapports de plantage <strong>anonymes</strong> via <strong>Google
-Firebase (Analytics sans identifiants publicitaires, et Crashlytics)</strong>.
-Cela comprend les événements de l'application (par ex. l'ouverture d'une visite), les informations sur les
-plantages et erreurs, le modèle de l'appareil, la version du système d'exploitation, la version de l'application
-et la région approximative — liés uniquement à un identifiant d'installation aléatoire, <strong>et non à votre
-identité</strong>. Ces données servent uniquement à améliorer l'application, jamais à la publicité ni au suivi.</p>
-<p>Base juridique&nbsp;: art. 6, paragraphe 1, point f) du RGPD — notre intérêt légitime à disposer d'une application
-stable et à savoir quelles fonctionnalités sont utilisées. Durée de conservation&nbsp;: les rapports de plantage sont
-conservés 90 jours&nbsp;; les événements d'analyse au maximum 14 mois (paramètre de conservation de Google), puis
-supprimés automatiquement.</p>
+<h2>Statistiques d'utilisation et rapports de plantage</h2>
+<p><strong>Statistiques d'utilisation — uniquement avec votre consentement.</strong> À la dernière page du premier
+démarrage, et à tout moment dans Réglages → Partager les statistiques d'utilisation, l'application vous demande si vous
+souhaitez partager des statistiques d'utilisation. Ce n'est que si vous acceptez qu'elle envoie des événements via
+<strong>Google Firebase Analytics</strong> (sans identifiant publicitaire)&nbsp;: par exemple qu'une visite a été ouverte,
+téléchargée ou terminée, que l'écran d'achat a été affiché, et le résultat d'un achat ou d'une restauration (produit et
+résultat — jamais de données de paiement), avec le modèle de l'appareil, les versions d'iOS et de l'application et la
+région approximative. Les événements sont liés à un identifiant d'installation aléatoire, pas à votre nom&nbsp;: ce sont
+des données <strong>pseudonymes</strong>. Vous pouvez retirer votre consentement à tout moment dans les Réglages&nbsp;;
+la collecte s'arrête aussitôt.</p>
+<p><strong>Rapports de plantage.</strong> Pour corriger les bugs, l'application envoie les informations de plantage et
+d'erreur avec le modèle de l'appareil, les versions d'iOS et de l'application et un identifiant aléatoire via
+<strong>Firebase Crashlytics</strong>.</p>
+<p>Base juridique&nbsp;: statistiques d'utilisation — votre consentement, art. 6, par. 1, point a) du RGPD&nbsp;; rapports
+de plantage — art. 6, par. 1, point f) du RGPD, notre intérêt légitime à une application qui fonctionne. Durée de
+conservation&nbsp;: rapports de plantage 90 jours&nbsp;; événements d'analyse au maximum 14 mois (paramètre de
+conservation de Google), puis suppression automatique. Ni les uns ni les autres ne servent à la publicité ou au pistage.</p>
 
 <h2>Notes et commentaires</h2>
-<p>Après une visite, l'application peut vous demander de la noter de 1 à 5 étoiles. Les notes sont stockées
-<strong>de manière anonyme</strong> sous forme de compteur par visite (somme et nombre de notes) dans Google Firebase
-Firestore — rien dans ces données ne vous identifie. Si vous choisissez de nous dire ce qui pourrait être amélioré,
-ce texte (avec la note, la visite, la langue et la version de l'application — sans identifiant) est stocké dans
-Firestore et nous est transmis via un Cloudflare Worker vers un chat Telegram, afin que nous puissions le lire
-rapidement. Il n'est jamais affiché dans l'application ni publié&nbsp;; merci de ne pas y inclure de données
-personnelles. Avec 4–5 étoiles, l'application affiche la demande d'évaluation standard de l'App Store d'Apple,
-entièrement gérée par Apple.</p>
-<p>Base juridique&nbsp;: art. 6, paragraphe 1, point f) du RGPD (amélioration des visites) et, pour le texte que vous
-choisissez d'envoyer, votre décision de l'envoyer. Les notes sont conservées sous forme de compteurs tant que la
-visite est proposée&nbsp;; les commentaires écrits sont supprimés une fois lus et traités.</p>
+<p>Après une visite, l'application peut vous proposer de la noter de 1 à 5 étoiles. Les notes sont enregistrées
+<strong>anonymement</strong> sous forme de compteur par visite (somme et nombre de notes) dans Google Firebase
+Firestore — rien ne permet de vous identifier. Si vous choisissez de nous dire ce qui pourrait être amélioré, ce texte
+(avec la note, la visite, la langue et la version de l'application — sans identifiant) est enregistré dans Firestore et
+nous est transmis par un Cloudflare Worker vers un chat Telegram afin que nous puissions le lire rapidement. Il n'est
+jamais affiché dans l'application ni publié&nbsp;; merci de ne pas y inclure de données personnelles. Après votre note,
+quel que soit le nombre d'étoiles, iOS peut afficher la demande d'avis standard de l'App Store, entièrement gérée par
+Apple.</p>
+<p>Base juridique&nbsp;: art. 6, par. 1, point f) du RGPD (amélioration des visites) et, pour le texte que vous choisissez
+d'envoyer, votre décision de l'envoyer. Les notes sont conservées sous forme de compteurs tant que la visite est proposée&nbsp;;
+les commentaires sont supprimés une fois lus et traités.</p>
 
-<h2>Diffusion du contenu des visites</h2>
+<h2>Contenu des visites et cartes</h2>
 <p>Les fichiers des visites (audio, texte, images) sont téléchargés depuis notre réseau de diffusion de contenu
-(<code>cdn.addtomap.co</code>, servi via Cloudflare). Des données techniques de requête usuelles (comme l'adresse
-IP) peuvent être traitées par Cloudflare pour délivrer les fichiers et protéger le service&nbsp;; nous ne les utilisons
-pas pour vous identifier. Base juridique&nbsp;: art. 6, paragraphe 1, point b) du RGPD — la fourniture des visites que
-vous avez demandées — et art. 6, paragraphe 1, point f) du RGPD pour la sécurité.</p>
+(<code>cdn.addtomap.co</code>, servi via Cloudflare). Les cartes affichent des données OpenStreetMap chargées depuis
+<strong>OpenFreeMap</strong> (<code>tiles.openfreemap.org</code>)&nbsp;; la carte de la zone d'une visite est enregistrée
+sur votre téléphone pour un usage hors ligne. Ces deux serveurs traitent les données techniques usuelles de la requête
+(comme l'adresse IP) pour fournir les fichiers et protéger le service&nbsp;; nous ne les utilisons pas pour vous identifier.
+Base juridique&nbsp;: art. 6, par. 1, point b) du RGPD — fournir les visites que vous avez demandées — et art. 6, par. 1,
+point f) du RGPD pour la sécurité.</p>
 
 <h2>Ce site web</h2>
 <p>addtomap.co est hébergé sur GitHub Pages et diffusé via Cloudflare. Lorsque vous l'ouvrez, les serveurs traitent
@@ -100,26 +107,34 @@ point f) du RGPD.</p>
 
 <h2>Achats</h2>
 <p>Les visites payantes s'achètent via l'App Store. Apple traite le paiement en tant que vendeur&nbsp;; nous ne recevons
-jamais vos données de paiement ni votre identifiant Apple — l'application sait seulement quelles visites sont débloquées.</p>
+jamais vos données de paiement ni votre identifiant Apple — l'application sait seulement quelles visites sont débloquées.
+Si vous avez accepté les statistiques d'utilisation, l'application enregistre aussi qu'un achat a été lancé et son
+résultat (voir plus haut).</p>
 
-<h2>Sous-traitants</h2>
+<h2>Sous-traitants et autres destinataires</h2>
+<p>Sous-traitants agissant pour notre compte&nbsp;:</p>
 <ul>
-  <li><strong>Google Firebase</strong> (Analytics / Crashlytics / Firestore) — diagnostics, compteurs anonymes des visites et commentaires.</li>
+  <li><strong>Google Firebase</strong> (Analytics / Crashlytics / Firestore) — statistiques d'utilisation (avec consentement), rapports de plantage, compteurs anonymes des visites et commentaires.</li>
   <li><strong>Cloudflare</strong> — diffusion de contenu, sécurité et relais des commentaires (Workers).</li>
-  <li><strong>Telegram</strong> — transmission des commentaires que vous choisissez d'envoyer vers le chat du développeur.</li>
-  <li><strong>Apple</strong> — distribution de l'application et, pour les visites payantes, paiement (Apple est juridiquement le vendeur).</li>
   <li><strong>GitHub</strong> — hébergement de ce site web.</li>
+</ul>
+<p>Autres destinataires, chacun responsable de son propre traitement&nbsp;:</p>
+<ul>
+  <li><strong>Apple</strong> — distribution de l'application et, pour les visites payantes, paiement (Apple est le vendeur et un responsable de traitement indépendant).</li>
+  <li><strong>Telegram</strong> — transmission des commentaires que vous choisissez d'envoyer vers le chat du développeur.</li>
+  <li><strong>OpenFreeMap</strong> — tuiles de carte (voir «&nbsp;Contenu des visites et cartes&nbsp;»).</li>
 </ul>
 <p>Google, Cloudflare et GitHub peuvent traiter des données aux États-Unis&nbsp;; ils sont certifiés au titre de l'EU–US
 Data Privacy Framework (décision d'adéquation de la Commission européenne, art. 45 du RGPD). Les commentaires relayés
 vers Telegram peuvent être traités en dehors de l'UE — merci de ne pas y inclure de données personnelles.</p>
 
 <h2>Vos droits (RGPD)</h2>
-<p>Vous disposez d'un droit d'accès (art. 15), de rectification (art. 16), à l'effacement (art. 17), à la limitation du
-traitement (art. 18), à la portabilité des données (art. 20) et d'opposition au traitement fondé sur des intérêts
-légitimes (art. 21). Les données étant anonymes, nous ne pouvons généralement pas les rattacher à vous&nbsp;; vous pouvez
-mettre fin à tous les diagnostics en supprimant l'application, et vous contrôlez la localisation dans les Réglages
-d'iOS. Écrivez-nous pour toute demande.</p>
+<p>Vous disposez d'un droit d'accès (art. 15), de rectification (art. 16), d'effacement (art. 17), de limitation
+du traitement (art. 18), à la portabilité des données (art. 20) et d'opposition au traitement fondé sur l'intérêt légitime
+(art. 21). Vous pouvez retirer à tout moment votre consentement aux statistiques d'utilisation dans les Réglages, sans
+remettre en cause le traitement effectué auparavant (art. 7, par. 3). Les données étant pseudonymes, nous ne pouvons en
+général pas les relier à vous&nbsp;; vous pouvez arrêter tout diagnostic en supprimant l'application, et vous contrôlez la
+localisation dans les Réglages d'iOS. Écrivez-nous pour toute demande.</p>
 <p>Vous avez également le droit d'introduire une réclamation auprès d'une autorité de contrôle (art. 77 du RGPD), par
 exemple dans votre pays de résidence. L'autorité compétente à notre égard est le Commissaire hessois à la protection
 des données et à la liberté d'information (HBDI), Gustav-Stresemann-Ring 1, 65189 Wiesbaden, Allemagne.</p>
