@@ -263,3 +263,26 @@ for (const lang of LANGS) {
   });
 }
 
+// What app build 9 does must be what the policy says (audit 15 Oct): statistics only with consent (Art. 6(1)(a),
+// pseudonymous), the review prompt after any rating, OpenFreeMap for the maps, Apple and Telegram as recipients
+// rather than our processors.
+const CONSENT_BASIS = { en: '6(1)(a)', de: 'Art. 6 Abs. 1 lit. a', fr: 'point a)', es: 'letra a)', it: 'lett. a)', ru: '6(1)(a)' };
+const PSEUDONYMOUS = { en: 'pseudonymous', de: 'pseudonym', fr: 'pseudonymes', es: 'seudonimizados', it: 'pseudonimi', ru: 'псевдонимизированн' };
+for (const lang of LANGS) {
+  test(`privacy policy in ${lang} matches the app: consent, maps, recipients`, async ({ page }) => {
+    await page.goto(lang === 'en' ? '/privacy.html' : `/privacy-${lang}.html`);
+    const text = await page.locator('body').innerText();
+    expect(text).toContain(CONSENT_BASIS[lang]);
+    expect(text).toContain(PSEUDONYMOUS[lang]);
+    expect(text).toContain('OpenFreeMap');
+    expect(text).toContain('tiles.openfreemap.org');
+    expect(text).toContain('Firebase Crashlytics');
+    await expect(page.locator('h2')).toHaveCount(13);
+    // Apple and Telegram sit in the second list (other recipients), not among the processors.
+    const lists = page.locator('h2:nth-of-type(9) ~ ul');
+    await expect(lists.first()).not.toContainText('Apple');
+    await expect(lists.first()).not.toContainText('Telegram');
+    await expect(lists.nth(1)).toContainText('Apple');
+  });
+}
+
